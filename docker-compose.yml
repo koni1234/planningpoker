@@ -1,0 +1,24 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    volumes:
+      - ./backend/:/app
+    ports:
+      - 3000:3000
+    networks:
+      - app
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    volumes:
+      - ./frontend/:/app
+    tty: true
+    ports:
+      - 80:8080
+    networks:
+      - app
+networks:
+  app:
