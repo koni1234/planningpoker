@@ -7,6 +7,8 @@ services:
       - ./backend/:/app
     ports:
       - 3000:3000
+    depends_on:
+      - redis
     networks:
       - app
   frontend:
@@ -20,5 +22,14 @@ services:
       - 80:8080
     networks:
       - app
+  redis:
+    image: redis
+    ports:
+      - 6379:6379
+    volumes:
+      - redis:/data
+volumes:
+  redis:
+    driver: local
 networks:
   app:
