@@ -1,48 +1,28 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { CREATE_USER } from '../graphql/mutations';
+import { ref } from 'vue';
+import { useMutation } from '@vue/apollo-composable';
 
-defineProps<{ msg: string }>();
-
-const count = ref(0);
+const text = ref('');
 const response = ref('load..');
+const { mutate: createUser } = useMutation(CREATE_USER, () => ({
+    variables: {
+        input: {
+            name: text.value,
+        },
+    },
+}));
 
 fetch('http://localhost:3000', {
-  method: 'GET'
+    method: 'GET',
 })
     .then((response) => response.json())
     .then((data) => {
-      response.value = data;
-    })
+        response.value = data;
+    });
 </script>
 
 <template>
-  <h1>{{ msg }}</h1>
-
-  <div class="card">
-    <button type="button" @click="count++">count is {{ count }}</button>
-    <p>
-      Edit
-      <code>components/HelloWorld.vue</code> to test HMR e daje!
-    </p>
-  </div>
-
-  <p>
-    Check out
-    <a href="https://vuejs.org/guide/quick-start.html#local" target="_blank"
-      >create-vue</a
-    >, the official Vue + Vite starter
-  </p>
-  <p>
-    Install
-    <a href="https://github.com/johnsoncodehk/volar" target="_blank">Volar</a>
-    in your IDE for a better DX
-  </p>
-  <p class="read-the-docs">Click on the Vite and Vue logos to learn more</p>
-  {{ response }}
+    <input v-model="text" placeholder="Enter a message" />
+    <button type="button" @click="createUser">Create user</button>
 </template>
-
-<style scoped>
-.read-the-docs {
-  color: #888;
-}
-</style>

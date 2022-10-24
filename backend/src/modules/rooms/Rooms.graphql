@@ -1,0 +1,30 @@
+enum VotingScaleType {
+    fibonacci
+    tshirt
+}
+
+input CreateRoomInput {
+    id: ID!
+    ownerId: ID!
+    name: String!
+    votingScale: VotingScaleType!
+}
+
+type Room {
+    id: ID!
+    ownerId: ID!
+    name: String!
+    votingScale: VotingScaleType!
+}
+
+type Query {
+    getRoom(id: ID!): Room
+}
+
+type Mutation {
+    createRoom(createRoomInput: CreateRoomInput!): Room
+}
+
+type Subscription {
+    roomCreated: Room
+}
