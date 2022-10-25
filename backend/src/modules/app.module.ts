@@ -7,6 +7,7 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
 import { RoomsModule } from './rooms/Rooms.module';
 import { UsersModule } from './users/Users.module';
+import { PubSubModule } from './pubSub/PubSub.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { UsersModule } from './users/Users.module';
       },
       subscriptions: {
         'graphql-ws': true,
+        'subscriptions-transport-ws': true,
       },
     }),
     CacheModule.register({
@@ -25,6 +27,7 @@ import { UsersModule } from './users/Users.module';
       host: process.env.REDIS_HOST,
       port: process.env.REDIS_PORT,
     }),
+    PubSubModule,
     GamesModule,
     RoomsModule,
     UsersModule,

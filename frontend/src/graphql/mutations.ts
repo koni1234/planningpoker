@@ -8,3 +8,14 @@ export const CREATE_USER = gql`
         }
     }
 `;
+
+export const CREATE_GAME = gql`
+    mutation createRoom($input: CreateRoomInput!) {
+        createRoom(createRoomInput: $input) {
+            id
+            name
+            ownerId
+            votingScale
+        }
+    }
+`;

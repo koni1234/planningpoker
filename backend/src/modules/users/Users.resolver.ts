@@ -25,7 +25,7 @@ export class UsersResolver {
   }
 
   @Subscription('userCreated')
-  roomCreated() {
+  userCreated() {
     return pubSub.asyncIterator('userCreated');
   }
 }

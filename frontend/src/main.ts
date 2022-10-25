@@ -1,21 +1,35 @@
 import './style.css';
-import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client/core';
+import { ApolloClient, HttpLink, InMemoryCache, split } from '@apollo/client/core';
 import { createApp, h, provide } from 'vue';
 import App from './App.vue';
 import { DefaultApolloClient } from '@vue/apollo-composable';
+import { WebSocketLink } from '@apollo/client/link/ws';
+import { getMainDefinition } from '@apollo/client/utilities';
 
-// HTTP connection to the API
-const httpLink = createHttpLink({
-    // You should use an absolute URL here
+const wsLink = new WebSocketLink({
+    uri: `ws://localhost:3000/graphql`,
+    options: {
+        reconnect: true,
+    },
+});
+
+const httpLink = new HttpLink({
     uri: 'http://localhost:3000/graphql',
 });
 
-// Cache implementation
+const link = split(
+    // split based on operation type
+    ({ query }) => {
+        const definition = getMainDefinition(query);
+        return definition.kind === 'OperationDefinition' && definition.operation === 'subscription';
+    },
+    wsLink,
+    httpLink
+);
 const cache = new InMemoryCache();
 
-// Create the apollo client
 const apolloClient = new ApolloClient({
-    link: httpLink,
+    link,
     cache,
 });
 
