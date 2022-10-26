@@ -14,7 +14,3 @@ type Query {
 type Mutation {
     createUser(createUserInput: CreateUserInput!): User
 }
-
-type Subscription {
-    userCreated: User
-}

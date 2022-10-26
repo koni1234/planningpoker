@@ -20,6 +20,17 @@ export interface CreateRoomInput {
     votingScale: VotingScaleType;
 }
 
+export interface EnterRoomInput {
+    roomId: string;
+    userId: string;
+    userName: string;
+}
+
+export interface LeaveRoomInput {
+    roomId: string;
+    userId: string;
+}
+
 export interface CreateUserInput {
     name: string;
 }
@@ -29,6 +40,7 @@ export interface Room {
     ownerId: string;
     name: string;
     votingScale: VotingScaleType;
+    users?: Nullable<Nullable<User>[]>;
 }
 
 export interface IQuery {
@@ -38,12 +50,14 @@ export interface IQuery {
 
 export interface IMutation {
     createRoom(createRoomInput: CreateRoomInput): Nullable<Room> | Promise<Nullable<Room>>;
+    enterRoom(enterRoomInput: EnterRoomInput): Nullable<Room> | Promise<Nullable<Room>>;
+    leaveRoom(leaveRoomInput: LeaveRoomInput): Nullable<Room> | Promise<Nullable<Room>>;
     createUser(createUserInput: CreateUserInput): Nullable<User> | Promise<Nullable<User>>;
 }
 
 export interface ISubscription {
     roomCreated(): Nullable<Room> | Promise<Nullable<Room>>;
-    userCreated(): Nullable<User> | Promise<Nullable<User>>;
+    roomUpdated(): Nullable<Room> | Promise<Nullable<Room>>;
 }
 
 export interface User {

@@ -9,7 +9,7 @@ export class UsersService {
   constructor(@Inject(CACHE_MANAGER) private cacheService: Cache) {}
 
   async getUser(id: string): Promise<User | undefined> {
-    return await this.cacheService.get<User>(id);
+    return await this.cacheService.get<User>('user-' + id);
   }
 
   async createUser(dto: CreateUserDto): Promise<User> {
@@ -18,9 +18,9 @@ export class UsersService {
       id: uuidv4(),
     };
 
-    console.log(user)
+    console.log(user);
 
-    await this.cacheService.set(user.id, user, 999999);
+    await this.cacheService.set('user-' + user.id, user, 999999);
 
     return user;
   }

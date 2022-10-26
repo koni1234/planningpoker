@@ -15,8 +15,12 @@ export interface CreateUserResponseInterface {
     createUser: UserInterface;
 }
 
-export interface GameCreatedResponseInterface {
-    roomCreated: GameInterface;
+export interface CreateGameResponseInterface {
+    createRoom: GameInterface;
+}
+
+export interface GameUpdatedResponseInterface {
+    roomUpdated: GameInterface;
 }
 
 export interface GetGameResponseInterface {

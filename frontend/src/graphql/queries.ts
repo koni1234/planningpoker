@@ -1,3 +1,4 @@
+import { USERS_FRAGMENT } from './fragments';
 import gql from 'graphql-tag';
 
 export const GET_GAME = gql`
@@ -7,6 +8,12 @@ export const GET_GAME = gql`
             name
             ownerId
             votingScale
+            users {
+                id
+                name
+            }
+            ...UsersFragment
         }
     }
+    ${USERS_FRAGMENT}
 `;

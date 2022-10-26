@@ -1,3 +1,5 @@
+#import User from "../users/Users.graphql"
+
 enum VotingScaleType {
     fibonacci
     tshirt
@@ -10,11 +12,23 @@ input CreateRoomInput {
     votingScale: VotingScaleType!
 }
 
+input EnterRoomInput {
+    roomId: ID!
+    userId: ID!
+    userName: String!
+}
+
+input LeaveRoomInput {
+    roomId: ID!
+    userId: ID!
+}
+
 type Room {
     id: ID!
     ownerId: ID!
     name: String!
     votingScale: VotingScaleType!
+    users: [User]
 }
 
 type Query {
@@ -23,8 +37,11 @@ type Query {
 
 type Mutation {
     createRoom(createRoomInput: CreateRoomInput!): Room
+    enterRoom(enterRoomInput: EnterRoomInput!): Room
+    leaveRoom(leaveRoomInput: LeaveRoomInput!): Room
 }
 
 type Subscription {
     roomCreated: Room
+    roomUpdated: Room
 }

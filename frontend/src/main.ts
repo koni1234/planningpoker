@@ -18,7 +18,6 @@ const httpLink = new HttpLink({
 });
 
 const link = split(
-    // split based on operation type
     ({ query }) => {
         const definition = getMainDefinition(query);
         return definition.kind === 'OperationDefinition' && definition.operation === 'subscription';
@@ -26,7 +25,7 @@ const link = split(
     wsLink,
     httpLink
 );
-const cache = new InMemoryCache();
+const cache = new InMemoryCache({ addTypename: false });
 
 const apolloClient = new ApolloClient({
     link,
