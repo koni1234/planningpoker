@@ -1,11 +1,10 @@
 import { CacheModule, Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { GamesModule } from './games/Games.module';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
-import { RoomsModule } from './rooms/Rooms.module';
+import { GamesModule } from './games/Games.module';
 import { UsersModule } from './users/Users.module';
 import { PubSubModule } from './pubSub/PubSub.module';
 
@@ -29,7 +28,6 @@ import { PubSubModule } from './pubSub/PubSub.module';
     }),
     PubSubModule,
     GamesModule,
-    RoomsModule,
     UsersModule,
   ],
   controllers: [AppController],

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { CreateUserResponseInterface, UserInterface } from '../types';
-import { defineEmits, ref } from 'vue';
-import { CREATE_USER } from '../graphql/mutations';
+import { CREATE_USER } from '../graphql/mutations/CreateUser';
 import { FetchResult } from '@apollo/client/link/core/types';
+import { ref } from 'vue';
 import { useMutation } from '@vue/apollo-composable';
 
 const emit = defineEmits<{

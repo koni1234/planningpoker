@@ -7,10 +7,6 @@ import { PubSub } from 'graphql-subscriptions';
     {
       provide: 'PUB_SUB',
       useClass: PubSub,
-      // useValue: new PubSub(),
-      // useFactory: () => {
-      //  return new PubSub();
-      // }
     },
   ],
   exports: ['PUB_SUB'],

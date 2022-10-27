@@ -1,9 +1,8 @@
 import { Module } from '@nestjs/common';
-import { GamesController } from './Games.controller';
 import { GamesService } from './Games.service';
+import { GamesResolver } from './Games.resolver';
 
 @Module({
-  controllers: [GamesController],
-  providers: [GamesService],
+  providers: [GamesService, GamesResolver],
 })
 export class GamesModule {}

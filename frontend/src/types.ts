@@ -1,14 +1,21 @@
+export enum VotingScaleEnum {
+    fibonacci = 'fibonacci',
+    tshirt = 'tshirt',
+}
+
 export interface UserInterface {
     id: string;
     name: string;
+    vote?: string | null;
 }
 
 export interface GameInterface {
     id: string;
     ownerId: string;
     name: string;
-    votingScale: 'fibonacci' | 'tshirt';
+    votingScale: VotingScaleEnum;
     users?: UserInterface[];
+    closed: boolean;
 }
 
 export interface CreateUserResponseInterface {
@@ -16,13 +23,13 @@ export interface CreateUserResponseInterface {
 }
 
 export interface CreateGameResponseInterface {
-    createRoom: GameInterface;
+    createGame: GameInterface;
 }
 
 export interface GameUpdatedResponseInterface {
-    roomUpdated: GameInterface;
+    gameUpdated: GameInterface;
 }
 
 export interface GetGameResponseInterface {
-    getRoom: GameInterface;
+    getGame: GameInterface;
 }

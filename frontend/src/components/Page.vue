@@ -6,13 +6,13 @@ import {
     UserInterface,
 } from '../types';
 import { useLazyQuery, useMutation, useSubscription } from '@vue/apollo-composable';
-import { ENTER_GAME } from '../graphql/mutations';
+import { ENTER_GAME } from '../graphql/mutations/EnterGame';
 import { FetchResult } from '@apollo/client/link/core/types';
-import { GAME_UPDATED } from '../graphql/subscriptions';
-import { GET_GAME } from '../graphql/queries';
-import SignIn from './SignIn.vue';
+import { GAME_UPDATED } from '../graphql/subscriptions/GameUpdate';
+import { GET_GAME } from '../graphql/queries/GetGame';
+import GamePanel from './GamePanel.vue';
+import LoginPanel from './LoginPanel.vue';
 import { StorageProvider } from '../services/storage/StorageProvider';
-import UserPanel from './UserPanel.vue';
 import { ref } from 'vue';
 
 const urlPath = window.location.pathname.substring(1);
@@ -29,7 +29,7 @@ const {
 });
 
 onGameLoaded((data: FetchResult<GetGameResponseInterface>) => {
-    game.value = data.data?.getRoom || null;
+    game.value = data.data?.getGame || null;
 
     if (game.value && !game.value.users?.find((user) => user.id === userdata.value.id)) {
         enterGame();
@@ -47,27 +47,36 @@ const setUser = (data: UserInterface) => {
 
 const onNewGame = (data: GameInterface) => {
     game.value = { ...data };
-    localStorage.set('game', data);
     window.history.replaceState(window.location.href, '', `/${data.id}`);
     enterGame();
 };
 
-const { onResult: onGameUpdated } = useSubscription(GAME_UPDATED);
+const subscribeGame = () => {
+    const { onResult: onGameUpdated } = useSubscription(
+        GAME_UPDATED,
+        () => ({
+            gameId: game.value?.id,
+        }),
+        () => ({
+            enabled: !!game.value?.id,
+        })
+    );
 
-onGameUpdated((data: FetchResult<GameUpdatedResponseInterface>) => {
-    const updatedGame = data.data?.roomUpdated;
+    onGameUpdated((data: FetchResult<GameUpdatedResponseInterface>) => {
+        const updatedGame = data.data?.gameUpdated;
 
-    if (!updatedGame) {
-        return;
-    }
+        if (!updatedGame) {
+            return;
+        }
 
-    game.value = updatedGame;
-});
+        game.value = updatedGame;
+    });
+};
 
 const { mutate: enterGame } = useMutation(ENTER_GAME, () => ({
     variables: {
         input: {
-            roomId: game.value?.id,
+            gameId: game.value?.id,
             userId: userdata.value.id,
             userName: userdata.value.name,
         },
@@ -80,6 +89,8 @@ const onLeaveGame = () => {
     game.value = null;
 };
 
+subscribeGame();
+
 if (userdata.value.id && urlPath) {
     loadGame();
 }
@@ -88,9 +99,9 @@ if (userdata.value.id && urlPath) {
 <template>
     <template v-if="loading"> loading ... </template>
     <template v-else-if="userdata.id">
-        <user-panel :user="userdata" :game="game" @new-game="onNewGame" @leave-game="onLeaveGame" />
+        <game-panel :user="userdata" :game="game" @new-game="onNewGame" @leave-game="onLeaveGame" />
     </template>
     <template v-else>
-        <sign-in @created="setUser" />
+        <login-panel @created="setUser" />
     </template>
 </template>

@@ -18,8 +18,6 @@ export class UsersService {
       id: uuidv4(),
     };
 
-    console.log(user);
-
     await this.cacheService.set('user-' + user.id, user, 999999);
 
     return user;

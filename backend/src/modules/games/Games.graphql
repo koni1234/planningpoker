@@ -1,0 +1,67 @@
+#import User from "../users/Users.graphql"
+
+enum VotingScaleType {
+    fibonacci
+    tshirt
+}
+
+input CreateGameInput {
+    id: ID!
+    ownerId: ID!
+    name: String!
+    votingScale: VotingScaleType!
+}
+
+input EnterGameInput {
+    gameId: ID!
+    userId: ID!
+    userName: String!
+}
+
+input LeaveGameInput {
+    gameId: ID!
+    userId: ID!
+}
+
+input VoteInput {
+    gameId: ID!
+    userId: ID!
+    vote: String!
+}
+
+input CloseGameInput {
+    gameId: ID!
+    userId: ID!
+}
+
+input ResetGameInput {
+    gameId: ID!
+    userId: ID!
+}
+
+type Game {
+    id: ID!
+    ownerId: ID!
+    name: String!
+    votingScale: VotingScaleType!
+    closed: Boolean!
+    users: [User]
+}
+
+type Query {
+    getGame(id: ID!): Game
+}
+
+type Mutation {
+    createGame(createGameInput: CreateGameInput!): Game
+    enterGame(enterGameInput: EnterGameInput!): Game
+    leaveGame(leaveGameInput: LeaveGameInput!): Game
+    vote(voteInput: VoteInput!): Game
+    resetGame(resetGameInput: ResetGameInput!): Game
+    closeGame(closeGameInput: CloseGameInput!): Game
+}
+
+type Subscription {
+    gameCreated: Game
+    gameUpdated(gameId: ID!): Game
+}

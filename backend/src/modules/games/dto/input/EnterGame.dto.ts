@@ -1,9 +1,9 @@
 import { IsString } from 'class-validator';
-import { EnterRoomInput } from '../../../../graphql';
+import { EnterGameInput } from '../../../../graphql';
 
-export class EnterRoomDto implements EnterRoomInput {
+export class EnterGameDto implements EnterGameInput {
   @IsString()
-  readonly roomId: string;
+  readonly gameId: string;
 
   @IsString()
   readonly userId: string;

@@ -1,19 +1,21 @@
-import { USERS_FRAGMENT } from './fragments';
+import { GAME_FRAGMENT } from '../fragments/GameFragment';
 import gql from 'graphql-tag';
 
 export const GET_GAME = gql`
-    query getRoom($input: ID!) {
-        getRoom(id: $input) {
+    query getGame($input: ID!) {
+        getGame(id: $input) {
             id
             name
             ownerId
             votingScale
+            closed
             users {
                 id
                 name
+                vote
             }
-            ...UsersFragment
+            ...GameFragment
         }
     }
-    ${USERS_FRAGMENT}
+    ${GAME_FRAGMENT}
 `;

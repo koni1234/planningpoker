@@ -5,6 +5,7 @@ input CreateUserInput {
 type User {
     id: ID!
     name: String!
+    vote: String
 }
 
 type Query {
