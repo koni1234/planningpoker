@@ -3,10 +3,15 @@ import { CreateGameResponseInterface, GameInterface, UserInterface } from '../ty
 import { CLOSE_GAME } from '../graphql/mutations/CloseGame';
 import { CREATE_GAME } from '../graphql/mutations/CreateGame';
 import { ENTER_GAME } from '../graphql/mutations/EnterGame';
+import { FLEX_DIRECTION } from '../ui.enums';
 import { FetchResult } from '@apollo/client/link/core/types';
 import GameCards from './GameCards.vue';
 import GameTable from './GameTable.vue';
 import { LEAVE_GAME } from '../graphql/mutations/LeaveGame';
+import PpButton from './common/PpButton.vue';
+import PpGrid from './common/PpGrid.vue';
+import PpGridItem from './common/PpGridItem.vue';
+import PpText from './common/PpText.vue';
 import { RESET_GAME } from '../graphql/mutations/ResetGame';
 import { VOTE } from '../graphql/mutations/Vote';
 import { computed } from 'vue';
@@ -142,26 +147,69 @@ window.addEventListener('beforeunload', () => leaveGame);
 </script>
 
 <template>
-    <template v-if="props.game">
-        <button>Invite player</button>
-        <button v-if="canInviteAlex" @click="playWithAlex">Invite Alex</button>
-        <br /><br /><br /><br /><br />
-        <game-table :game="props.game" />
-        <br /><br />
-        <game-cards
-            v-if="!props.game.closed"
-            :voting-scale="props.game.votingScale"
-            @voted="onVote"
-        />
-        <br /><br /><br /><br /><br />
-        <button v-if="canCloseGame" @click="revealCards">Reveal cards</button>
-        <button v-if="canStartNewGame" @click="resetGame">New game</button>
-        <button type="button" @click="leaveGame">Leave the game</button>
-    </template>
-    <template v-else>
-        <p>Hello {{ props.user.name }}</p>
-        <button type="button" @click="createGame">
-            Start new game <b>{{ props.game?.id || newGameId }}</b>
-        </button>
-    </template>
+    <pp-grid>
+        <pp-grid-item v-if="props.game">
+            <pp-grid :direction="FLEX_DIRECTION.COLUMN">
+                <pp-grid-item class="top-bar">
+                    <pp-button class="is-inline--f"> Invite players </pp-button>
+                    <pp-button
+                        v-if="canInviteAlex"
+                        class="margin-l--12 is-inline--f"
+                        @click="playWithAlex"
+                    >
+                        Invite Alex
+                    </pp-button>
+                    <pp-button
+                        class="margin-l--12 is-inline--f"
+                        variant="danger-outline"
+                        @click="leaveGame"
+                    >
+                        Leave the game
+                    </pp-button>
+                    <pp-button
+                        v-if="canCloseGame"
+                        variant="primary-outline"
+                        class="margin-l--12 is-inline--f"
+                        @click="revealCards"
+                    >
+                        Reveal cards
+                    </pp-button>
+                    <pp-button
+                        v-if="canStartNewGame"
+                        variant="primary"
+                        class="margin-l--12 is-inline--f"
+                        @click="resetGame"
+                    >
+                        New game
+                    </pp-button>
+                </pp-grid-item>
+                <pp-grid-item>
+                    <game-table :game="props.game" class="margin-t--64 margin-b--64" />
+                    <game-cards
+                        v-if="!props.game.closed"
+                        class="margin-t--64 margin-b--64"
+                        :voting-scale="props.game.votingScale"
+                        @voted="onVote"
+                    />
+                </pp-grid-item>
+            </pp-grid>
+        </pp-grid-item>
+        <pp-grid-item v-else>
+            <pp-text variant="header-3" class="margin-b--24" tag="h3">
+                Hello {{ props.user.name }}
+            </pp-text>
+            <pp-button @click="createGame">
+                Start new game {{ props.game?.id || newGameId }}
+            </pp-button>
+        </pp-grid-item>
+    </pp-grid>
 </template>
+<style lang="scss">
+.top-bar {
+    position: sticky;
+    top: 0;
+    padding: $spacing--8 $spacing--12;
+    text-align: right;
+    background-color: $color--white;
+}
+</style>

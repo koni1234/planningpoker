@@ -1,3 +1,4 @@
+import './scss/style.scss';
 import './style.css';
 import { ApolloClient, HttpLink, InMemoryCache, split } from '@apollo/client/core';
 import { createApp, h, provide } from 'vue';

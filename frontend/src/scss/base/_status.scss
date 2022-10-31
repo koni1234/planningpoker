@@ -1,0 +1,73 @@
+/* Status and visibility solid classes */
+
+.is {
+    &-relative {
+        position: relative !important;
+    }
+
+    &-abs {
+        position: absolute !important;
+    }
+
+    &-hidden {
+        display: none !important;
+    }
+
+    &-flex {
+        display: flex !important;
+    }
+
+    &-inline--b {
+        display: inline-block !important;
+    }
+
+    &-inline--f {
+        display: inline-flex !important;
+    }
+
+    &-clickable {
+        cursor: pointer;
+    }
+
+    &-draggable {
+        cursor: move;
+    }
+
+    &-not-allowed {
+        cursor: not-allowed !important;
+    }
+
+    &-no-resizable {
+        resize: none !important;
+    }
+
+    &-disabled {
+        pointer-events: none !important;
+        opacity: .6 !important;
+    }
+}
+
+.height {
+    &--100 {
+        height: 100% !important;
+    }
+
+    &--auto {
+        height: auto !important;
+    }
+}
+
+.width {
+    &--25 {
+        width: 25% !important;
+    }
+
+    &--50 {
+        width: 50% !important;
+    }
+
+    &--100 {
+        width: 100% !important;
+    }
+}
+

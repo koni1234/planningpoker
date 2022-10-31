@@ -1,0 +1,31 @@
+@each $sizeKey, $sizeValue in $border-sizes {
+    .border--#{$sizeKey} {
+        border-width: $sizeValue !important;
+        border-style: solid;
+        border-color: $color--grey-3
+    }
+
+    @each $key, $value in $position-types {
+        .border-#{$key}--#{$sizeKey} {
+            border-#{$value}: $sizeValue solid $color--grey-3;
+        }
+    }
+}
+
+@each $styleKey, $styleValue in $border-styles {
+    .border-style--#{$styleKey} {
+        border-style: $styleValue !important;
+    }
+
+    @each $key, $value in $position-types {
+        .border-style-#{$key}--#{$styleKey} {
+            border-#{$value}-style: $styleValue !important;
+        }
+    }
+}
+
+@each $sizeKey, $sizeValue in $radius-types {
+    .radius--#{$sizeKey} {
+        border-radius: $sizeValue !important;
+    }
+}

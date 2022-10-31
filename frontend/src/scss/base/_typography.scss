@@ -1,0 +1,80 @@
+$align: left, right, center;
+$verticalAlign: top, middle, bottom, sub;
+
+html, body {
+    font-family: $font-family;
+}
+
+.tp {
+    @each $fontVariantKey, $fontVariantValues in $font-variants {
+        &--#{$fontVariantKey} {
+            @each $fontValueKey, $fontValue in $fontVariantValues {
+                #{$fontValueKey}: #{$fontValue};
+            }
+        }
+    }
+
+    @each $sizeKey, $sizeValue in $font-sizes {
+        &-size--#{$sizeKey} {
+            font-size: $sizeValue !important;
+        }
+    }
+
+    @each $value in $align {
+        &-align--#{$value} {
+            text-align: #{$value};
+        }
+    }
+
+    @each $value in $verticalAlign {
+        &-align-v--#{$value} {
+            vertical-align: #{$value};
+        }
+    }
+
+    @each $weightKey, $weightValue in $font-weights {
+        &-weight--#{$weightKey} {
+            font-weight: $weightValue;
+        }
+    }
+
+    &--truncate {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap
+    }
+
+    &--break{
+        &-word {
+            word-break: break-word
+        }
+
+        &-all {
+            word-break: break-all
+        }
+    }
+
+    &--space-normal {
+        white-space: normal
+    }
+
+    &--capitalize {
+        text-transform: capitalize
+    }
+
+    &--uppercase {
+        text-transform: uppercase
+    }
+
+    &--line-through {
+        text-decoration: line-through
+    }
+
+    &--underline {
+        text-decoration: underline
+    }
+
+    &--no-deco {
+        text-decoration: none
+    }
+}

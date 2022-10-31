@@ -12,6 +12,7 @@ import { GAME_UPDATED } from '../graphql/subscriptions/GameUpdate';
 import { GET_GAME } from '../graphql/queries/GetGame';
 import GamePanel from './GamePanel.vue';
 import LoginPanel from './LoginPanel.vue';
+import PpText from './common/PpText.vue';
 import { StorageProvider } from '../services/storage/StorageProvider';
 import { ref } from 'vue';
 
@@ -97,7 +98,9 @@ if (userdata.value.id && urlPath) {
 </script>
 
 <template>
-    <template v-if="loading"> loading ... </template>
+    <template v-if="loading">
+        <pp-text variant="header-1">loading</pp-text>
+    </template>
     <template v-else-if="userdata.id">
         <game-panel :user="userdata" :game="game" @new-game="onNewGame" @leave-game="onLeaveGame" />
     </template>

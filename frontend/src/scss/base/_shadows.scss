@@ -1,0 +1,6 @@
+@each $sizeKey, $sizeValue in $shadow-sizes {
+    .shadow--#{$sizeKey} {
+        box-shadow: $sizeValue $color--transparent-black-30;
+    }
+}
+

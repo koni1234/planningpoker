@@ -1,0 +1,35 @@
+/* Flexbox solid classes */
+
+@each $key, $value in $flex-justify-types {
+    .justify--#{$key} {
+        justify-content: #{$value} !important;
+    }
+}
+
+@each $key, $value in $flex-align-types {
+    .align-items--#{$key} {
+        align-items: #{$value} !important;
+    }
+}
+
+@each $key, $value in $flex-content-types {
+    .align-content--#{$key} {
+        align-content: #{$value} !important;
+    }
+}
+
+@each $key, $value in $flex-wrap-types {
+    .flex-#{$key} {
+        flex-wrap: #{$value} !important;
+    }
+}
+
+@each $key, $value in $flex-directions {
+    .flex-#{$key} {
+        flex-direction: #{$value} !important;
+    }
+}
+
+.order-last {
+    order: 9999;
+}

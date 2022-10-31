@@ -1,0 +1,42 @@
+@each $sizeKey, $sizeValue in $spacing-sizes {
+    .margin--#{$sizeKey} {
+        margin: $sizeValue !important;
+    }
+
+    .margin-v--#{$sizeKey} {
+        margin-top: $sizeValue !important;
+        margin-bottom: $sizeValue !important;
+    }
+
+    .margin-h--#{$sizeKey} {
+        margin-left: $sizeValue !important;
+        margin-right: $sizeValue !important;
+    }
+
+    @each $key, $value in $position-types {
+        .margin-#{$key}--#{$sizeKey} {
+            margin-#{$value}: $sizeValue !important;
+        }
+    }
+
+    .padding--#{$sizeKey} {
+        padding: $sizeValue !important;
+    }
+
+    .padding-v--#{$sizeKey} {
+        padding-top: $sizeValue !important;
+        padding-bottom: $sizeValue !important;
+    }
+
+    .padding-h--#{$sizeKey} {
+        padding-left: $sizeValue !important;
+        padding-right: $sizeValue !important;
+    }
+
+    @each $key, $value in $position-types {
+        .padding-#{$key}--#{$sizeKey} {
+            padding-#{$value}: $sizeValue !important;
+        }
+    }
+}
+

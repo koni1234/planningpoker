@@ -1,0 +1,67 @@
+
+.is-abs {
+    &--m {
+        position: absolute;
+        margin: auto;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
+
+    &--t {
+        position: absolute;
+        margin: auto;
+        top: 0;
+        left: 0;
+        right: 0;
+
+        &-l {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        &-r {
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+    }
+
+    &--r {
+        position: absolute;
+        margin: auto;
+        right: 0;
+        top: 0;
+        bottom: 0;
+    }
+
+    &--b {
+        position: absolute;
+        margin: auto;
+        bottom: 0;
+        left: 0;
+        right: 0;
+
+        &-l {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+        }
+
+        &-r {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+        }
+    }
+
+    &--l {
+        position: absolute;
+        margin: auto;
+        left: 0;
+        top: 0;
+        bottom: 0;
+    }
+}

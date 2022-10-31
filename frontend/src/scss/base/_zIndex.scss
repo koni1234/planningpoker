@@ -1,0 +1,6 @@
+@each $sizeKey, $sizeValue in $z-index-sizes {
+    .z-index--#{$sizeKey} {
+        z-index: $sizeValue;
+    }
+}
+

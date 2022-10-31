@@ -1,12 +1,17 @@
 <script setup lang="ts">
+import { FLEX_ALIGN, FLEX_JUSTIFY, FLEX_WRAP, GRID_GUTTERS } from '../ui.enums';
+import { computed, ref } from 'vue';
+import PpGrid from './common/PpGrid.vue';
+import PpGridItem from './common/PpGridItem.vue';
 import { VotingScaleEnum } from '../types';
-import { computed } from 'vue';
 
 interface Props {
     votingScale: VotingScaleEnum;
 }
 
 const props = defineProps<Props>();
+
+const vote = ref<string>('');
 
 const emit = defineEmits<{
     (e: 'voted', vote: string): void;
@@ -17,10 +22,59 @@ const cards = computed<string[]>(() => {
         ? ['xxs', 'xs', 's', 'm', 'l', 'xl', 'xxl', '☕']
         : ['1', '2', '3', '5', '8', '13', '21', '☕'];
 });
+
+const cssClasses = (card: string): string[] => {
+    return ['card', 'is-clickable', card === vote.value ? 'selected' : ''];
+};
+
+const onVote = (card: string) => {
+    emit('voted', card);
+    vote.value = card;
+};
 </script>
 
 <template>
-    <button v-for="(card, index) in cards" :key="index" @click="emit('voted', card)">
-        {{ card }}
-    </button>
+    <pp-grid
+        :wrap="FLEX_WRAP.WRAP"
+        :gutters="GRID_GUTTERS.SIZE_16"
+        :align="FLEX_ALIGN.CENTER"
+        :justify="FLEX_JUSTIFY.CENTER"
+    >
+        <pp-grid-item
+            v-for="(card, index) in cards"
+            :key="index"
+            :class="cssClasses(card)"
+            @click="onVote(card)"
+        >
+            {{ card }}
+        </pp-grid-item>
+    </pp-grid>
 </template>
+<style lang="scss">
+.card {
+    border-radius: $radius--4;
+    border: $border--2 $border-style--solid $color--black;
+    height: 80px;
+    min-width: 60px;
+    max-width: 60px;
+    background-color: $color--grey-2;
+    transition: color ease 0.3s, background-color ease 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+        background-color: $color--grey-3;
+    }
+
+    &.selected {
+        font-weight: bold;
+        background-color: $color--primary;
+        color: $color--white;
+
+        &:hover {
+            background-color: $color--primary;
+        }
+    }
+}
+</style>

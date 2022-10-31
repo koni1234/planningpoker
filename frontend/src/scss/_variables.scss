@@ -1,0 +1,380 @@
+//Spacings variables
+$spacing--0: 0;
+$spacing--1: 1px;
+$spacing--2: 2px;
+$spacing--4: 4px;
+$spacing--6: 6px;
+$spacing--8: 8px;
+$spacing--12: 12px;
+$spacing--16: 16px;
+$spacing--24: 24px;
+$spacing--32: 32px;
+$spacing--40: 40px;
+$spacing--48: 48px;
+$spacing--64: 64px;
+$spacing--80: 80px;
+$spacing--auto: auto;
+
+$spacing-sizes: (
+    '0': $spacing--0,
+    '1': $spacing--1,
+    '2': $spacing--2,
+    '4': $spacing--4,
+    '6': $spacing--6,
+    '8': $spacing--8,
+    '12': $spacing--12,
+    '16': $spacing--16,
+    '24': $spacing--24,
+    '32': $spacing--32,
+    '40': $spacing--40,
+    '48': $spacing--48,
+    '64': $spacing--64,
+    '80': $spacing--80,
+    'auto': $spacing--auto,
+);
+
+//Borders variables
+$border--0: 0;
+$border--1: 1px;
+$border--2: 2px;
+$border--4: 4px;
+
+$border-sizes: (
+    '0': $border--0,
+    '1': $border--1,
+    '2': $border--2,
+    '4': $border--4
+);
+
+$border-style--solid: solid;
+$border-style--dashed: dashed;
+$border-style--dotted: dotted;
+
+$border-styles: (
+    'dashed': $border-style--dashed,
+    'dotted': $border-style--dotted,
+    'solid': $border-style--solid,
+);
+
+$radius--0: 0;
+$radius--4: 4px;
+$radius--9999: 9999px;
+
+$radius-types: (
+    '0': $radius--0,
+    'squared': $radius--0,
+    'rounded': $radius--4,
+    'full': $radius--9999,
+);
+
+//Position and direction variables
+$position-types: (
+    "t": top,
+    "r": right,
+    "b": bottom,
+    "l": left
+);
+
+//Colors variables
+$color--black: #333333;
+$color--blue: #2980b9;
+$color--green: #16a085;
+$color--grey: #DDDDDD;
+$color--orange: #f39c12;
+$color--red: #d9534f;
+$color--white: #FFFFFF;
+$color--transparent: transparent;
+
+$base-colors: (
+    "black": $color--black,
+    "blue": $color--blue,
+    "green": $color--green,
+    "grey": $color--grey,
+    "orange": $color--orange,
+    "red": $color--red,
+    "white": $color--white,
+    "transparent": $color--transparent
+);
+
+$color--primary: #16a085;
+$color--primary-light: #75cfb1;
+$color--primary-dark: #149077;
+$color--primary-alpha: rgba($color--primary, .2);
+$color--secondary: #28B8CE;
+$color--secondary-light: #8ddde9;
+$color--secondary-dark: #24a5b9;
+$color--tertiary: $color--black;
+$color--tertiary-light: #4d4d4d;
+$color--tertiary-dark: #262626;
+
+//Main colors primary/secondary/tertiary
+$main-colors: (
+    "primary-light": $color--primary-light,
+    "primary": $color--primary,
+    "primary-dark": $color--primary-dark,
+    "primary-alpha": $color--primary-alpha,
+    "secondary-light": $color--secondary-light,
+    "secondary": $color--secondary,
+    "secondary-dark": $color--secondary-dark,
+    "tertiary-light": $color--tertiary-light,
+    "tertiary": $color--tertiary,
+    "tertiary-dark": $color--tertiary-dark,
+);
+
+//Status colors
+$color--danger: $color--red;
+$color--danger-light: #ffecec;
+$color--danger-dark: #d2322d;
+$color--info-light: #6ab0de;
+$color--info: $color--blue;
+$color--info-dark: #2472a4;
+$color--success-dark: #4cae4c;
+$color--success-light: #a3d7a3;
+$color--success: #5cb85c;
+$color--warning: #f0ad4e;
+$color--warning-light: #fae3c4;
+$color--warning-dark: #ed9c28;
+
+$status-colors: (
+    "danger-light": $color--danger-light,
+    "danger": $color--danger,
+    "danger-dark": $color--danger-dark,
+    "info-light": $color--info-light,
+    "info": $color--info,
+    "info-dark": $color--info-dark,
+    "warning-light": $color--warning-light,
+    "warning": $color--warning,
+    "warning-dark": $color--warning-dark,
+    "success-light": $color--success-light,
+    "success": $color--success,
+    "success-dark": $color--success-dark,
+);
+
+//Colors greyscale
+$color--grey-1: #f9f9f9;
+$color--grey-2: #ebebeb;
+$color--grey-3: $color--grey;
+$color--grey-4: #cccccc;
+$color--grey-5: #999999;
+$color--grey-6: #767676;
+$color--grey-7: #555555;
+
+$greyscale-colors: (
+    "grey-1": $color--grey-1,
+    "grey-2": $color--grey-2,
+    "grey-3": $color--grey-3,
+    "grey-4": $color--grey-4,
+    "grey-5": $color--grey-5,
+    "grey-6": $color--grey-6,
+    "grey-7": $color--grey-7,
+);
+
+$color--transparent-0: rgba(0, 0, 0, 0);
+$color--transparent-black-10: rgba(0, 0, 0, .1);
+$color--transparent-black-30: rgba(0, 0, 0, .3);
+$color--transparent-black-60: rgba(0, 0, 0, .6);
+$color--transparent-white-30: rgba(255, 255, 255, .3);
+$color--transparent-white-60: rgba(255, 255, 255, .6);
+
+$transparent-colors: (
+    "transparent-0": $color--transparent-0,
+    "transparent-black-30": $color--transparent-black-30,
+    "transparent-black-60": $color--transparent-black-60,
+    "transparent-white-30": $color--transparent-white-30,
+    "transparent-white-60": $color--transparent-white-60
+);
+
+//Color for text
+$color--text: $color--black;
+
+$colors: map-merge($base-colors, $greyscale-colors);
+$colors: map-merge($colors, $transparent-colors);
+$colors: map-merge($colors, $main-colors);
+$colors: map-merge($colors, $status-colors);
+
+//Fonts and text variables
+$font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+$font-size--10: 10px;
+$font-size--11: 11px;
+$font-size--12: 12px;
+$font-size--14: 14px;
+$font-size--16: 16px;
+$font-size--18: 18px;
+$font-size--20: 20px;
+$font-size--24: 24px;
+$font-size--28: 28px;
+
+$font-weight--bold: 700;
+$font-weight--regular: 400;
+$font-weight--light: 200;
+
+$font-weights: (
+    "bold": $font-weight--bold,
+    "regular": $font-weight--regular,
+    "light": $font-weight--light,
+);
+
+$font-sizes: (
+    '10': $font-size--10,
+    '11': $font-size--11,
+    '12': $font-size--12,
+    '14': $font-size--14,
+    '16': $font-size--16,
+    '18': $font-size--18,
+    '20': $font-size--20,
+    '24': $font-size--24,
+    '28': $font-size--28
+);
+
+$font-variants: (
+    'header-1': (
+        'font-size': $font-size--28,
+        'font-weight': $font-weight--regular,
+        'line-height': 32px,
+        'font-family': $font-family
+    ),
+    'header-2': (
+        'font-size': $font-size--24,
+        'font-weight': $font-weight--regular,
+        'line-height': 28px,
+        'font-family': $font-family
+    ),
+    'header-3': (
+        'font-size': $font-size--20,
+        'font-weight': $font-weight--regular,
+        'line-height': 24px,
+        'font-family': $font-family
+    ),
+    'header-4': (
+        'font-size': $font-size--18,
+        'font-weight': $font-weight--bold,
+        'line-height': 22px,
+        'font-family': $font-family
+    ),
+    'header-5': (
+        'font-size': $font-size--14,
+        'font-weight': $font-weight--bold,
+        'line-height': 18px,
+        'font-family': $font-family
+    ),
+    'header-6': (
+        'font-size': $font-size--12,
+        'font-weight': $font-weight--bold,
+        'line-height': 16px,
+        'font-family': $font-family
+    ),
+    'text-large': (
+        'font-size': $font-size--16,
+        'font-weight': $font-weight--regular,
+        'line-height': 20px,
+        'font-family': $font-family
+    ),
+    'text': (
+        'font-size': $font-size--14,
+        'font-weight': $font-weight--regular,
+        'line-height': 18px,
+        'font-family': $font-family
+    ),
+    'text-small': (
+        'font-size': $font-size--12,
+        'font-weight': $font-weight--regular,
+        'line-height': 16px,
+        'font-family': $font-family
+    ),
+    'input': (
+        'font-size': $font-size--14,
+        'font-weight': $font-weight--regular,
+        'line-height': 18px,
+        'font-family': $font-family
+    ),
+    'input-label': (
+        'font-size': $font-size--14,
+        'font-weight': $font-weight--bold,
+        'line-height': 18px,
+        'font-family': $font-family,
+    ),
+);
+
+//Z-index vars
+$z-index--none: 0;
+$z-index--base: 1;
+$z-index--sticky-header: 900;
+$z-index--sticky-footer: 900;
+$z-index--dropdown: 910;
+$z-index--modal: 1100;
+$z-index--loading-overlay: 9999;
+
+$z-index-sizes: (
+    'none': $z-index--none,
+    'base': $z-index--base,
+    'sticky-header': $z-index--sticky-header,
+    'sticky-footer': $z-index--sticky-footer,
+    'dropdown': $z-index--dropdown,
+    'modal': $z-index--modal,
+);
+
+//Box shadows
+$shadow--0: 0 0 0 0;
+$shadow--1: 0 2px 4px 0;
+$shadow--2: 0 4px 8px 0;
+$shadow--3: 0 8px 16px 0;
+$shadow--4: 0 16px 32px 0;
+
+$shadow-sizes: (
+    '0': $shadow--0,
+    '1': $shadow--1,
+    '2': $shadow--2,
+    '3': $shadow--3,
+    '4': $shadow--4,
+);
+
+//Flex variables
+$flex-align-types: (
+    "flex-start": flex-start,
+    "flex-end": flex-end,
+    "center": center,
+    "stretch": stretch,
+    "baseline": baseline
+);
+
+$flex-content-types: (
+    "flex-start": flex-start,
+    "flex-end": flex-end,
+    "center": center,
+    "space-between": space-between,
+    "space-around": space-around,
+);
+
+$flex-justify-types: (
+    "flex-start": flex-start,
+    "flex-end": flex-end,
+    "center": center,
+    "space-between": space-between,
+    "space-around": space-around,
+);
+
+$flex-wrap-types: (
+    "wrap": wrap,
+    "wrap-reverse": wrap-reverse,
+    "nowrap": nowrap,
+);
+
+$flex-directions: (
+    "row": row,
+    "row-reverse": row-reverse,
+    "column": column,
+    "column-reverse": column-reverse,
+);
+
+// inputs, buttons and form elements common variables
+$input-height: 34px;
+$checkbox-height: 20px;
+$radio-height: 20px;
+$button-height: 34px;
+$button-height--x-small: 24px;
+$button-height--small: 28px;
+$button-height--medium: $button-height;
+
+// animations and transitions variables
+$transition-duration: 0.3s !default;
