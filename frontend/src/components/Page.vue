@@ -30,9 +30,18 @@ const {
 });
 
 onGameLoaded((data: FetchResult<GetGameResponseInterface>) => {
-    game.value = data.data?.getGame || null;
-
+    game.value = data.data?.getGame
+        ? {
+              ...data.data.getGame,
+              users: data.data.getGame.users ? [...data.data.getGame.users] : [],
+          }
+        : null;
     if (game.value && !game.value.users?.find((user) => user.id === userdata.value.id)) {
+        game.value.users?.push({
+            ...userdata.value,
+            vote: null,
+        });
+
         enterGame();
     }
 });
@@ -85,7 +94,7 @@ const { mutate: enterGame } = useMutation(ENTER_GAME, () => ({
 }));
 
 const onLeaveGame = () => {
-    setUser({ id: '', name: '' });
+    //setUser({ id: '', name: '' });
     window.history.replaceState(window.location.href, '', '/');
     game.value = null;
 };
@@ -98,13 +107,29 @@ if (userdata.value.id && urlPath) {
 </script>
 
 <template>
-    <template v-if="loading">
-        <pp-text variant="header-1">loading</pp-text>
-    </template>
-    <template v-else-if="userdata.id">
-        <game-panel :user="userdata" :game="game" @new-game="onNewGame" @leave-game="onLeaveGame" />
-    </template>
-    <template v-else>
-        <login-panel @created="setUser" />
-    </template>
+    <div class="tp-align--center">
+        <template v-if="loading">
+            <pp-text variant="header-1" class="loader">loading</pp-text>
+        </template>
+        <template v-else-if="userdata.id">
+            <game-panel
+                :user="userdata"
+                :game="game"
+                @new-game="onNewGame"
+                @leave-game="onLeaveGame"
+            />
+        </template>
+        <template v-else>
+            <login-panel @created="setUser" />
+        </template>
+    </div>
 </template>
+
+<style lang="scss">
+.loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+</style>

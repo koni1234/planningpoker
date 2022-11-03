@@ -10,3 +10,11 @@
 @import "base/_typography";
 @import "base/_flex";
 @import "base/_animations";
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: $color--grey-2;
+}

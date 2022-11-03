@@ -3,6 +3,7 @@ import { FLEX_ALIGN, FLEX_JUSTIFY, FLEX_WRAP, GRID_GUTTERS } from '../ui.enums';
 import { computed, ref } from 'vue';
 import PpGrid from './common/PpGrid.vue';
 import PpGridItem from './common/PpGridItem.vue';
+import PpText from './common/PpText.vue';
 import { VotingScaleEnum } from '../types';
 
 interface Props {
@@ -40,6 +41,9 @@ const onVote = (card: string) => {
         :align="FLEX_ALIGN.CENTER"
         :justify="FLEX_JUSTIFY.CENTER"
     >
+        <pp-grid-item :cols="12">
+            <pp-text variant="header-1" class="margin-b--24" tag="h1"> Choose your card </pp-text>
+        </pp-grid-item>
         <pp-grid-item
             v-for="(card, index) in cards"
             :key="index"

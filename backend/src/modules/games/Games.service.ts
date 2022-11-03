@@ -22,7 +22,13 @@ export class GamesService {
       ownerId: dto.ownerId,
       id: dto.id,
       votingScale: dto.votingScale,
-      users: [],
+      users: [
+        {
+          id: dto.ownerId,
+          name: dto.ownerName,
+          vote: null,
+        },
+      ],
       closed: false,
     };
 
@@ -34,11 +40,13 @@ export class GamesService {
   async enterGame(dto: EnterGameDto): Promise<Game> {
     const game = await this.getGame(dto.gameId);
 
-    game.users.push({
-      id: dto.userId,
-      name: dto.userName,
-      vote: null,
-    });
+    if (!game.users.find((user) => user.id === dto.userId)) {
+      game.users.push({
+        id: dto.userId,
+        name: dto.userName,
+        vote: null,
+      });
+    }
 
     await this.cacheService.set('game-' + game.id, game, 999999);
 

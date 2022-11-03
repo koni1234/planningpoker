@@ -8,6 +8,7 @@ enum VotingScaleType {
 input CreateGameInput {
     id: ID!
     ownerId: ID!
+    ownerName: String!
     name: String!
     votingScale: VotingScaleType!
 }

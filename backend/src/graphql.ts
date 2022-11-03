@@ -16,6 +16,7 @@ export enum VotingScaleType {
 export interface CreateGameInput {
     id: string;
     ownerId: string;
+    ownerName: string;
     name: string;
     votingScale: VotingScaleType;
 }

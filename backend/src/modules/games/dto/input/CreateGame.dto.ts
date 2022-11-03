@@ -12,5 +12,8 @@ export class CreateGameDto implements CreateGameInput {
   readonly ownerId: string;
 
   @IsString()
+  readonly ownerName: string;
+
+  @IsString()
   readonly votingScale: VotingScaleType;
 }
