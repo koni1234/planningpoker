@@ -2,7 +2,7 @@
 import { GameInterface, GameIssue, GetGameIssueResponseInterface, UserInterface } from '../types';
 import { computed, ref, watch } from 'vue';
 import { useLazyQuery, useMutation } from '@vue/apollo-composable';
-import { FONT_WEIGHTS } from '../ui.enums';
+import { ALL_COLORS, FONT_WEIGHTS } from '../ui.enums';
 import { FetchResult } from '@apollo/client/link/core/types';
 import { GET_GAME_ISSUE } from '../graphql/queries/GetGameIssue';
 import PpButton from './common/PpButton.vue';
@@ -11,6 +11,7 @@ import PpGridItem from './common/PpGridItem.vue';
 import PpInput from './common/PpInput.vue';
 import PpText from './common/PpText.vue';
 import { SET_GAME_ISSUE } from '../graphql/mutations/SetGameIssue';
+import { SET_ISSUE_STORY_POINTS } from '../graphql/mutations/SetIssueStoryPoints';
 
 interface Props {
     user: UserInterface;
@@ -20,11 +21,17 @@ interface Props {
 const props = defineProps<Props>();
 
 const text = ref<string>(props.game.issueId || '');
+const showStoryPointsUpdateMessange = ref<boolean>(false);
+const storypoints = ref<string>('5');
 //const errors = ref<string[]>([]);
 const gameIssue = ref<GameIssue | null>(null);
 
 const canSetGameIssue = computed<boolean>(() => {
     return props.game?.ownerId === props.user.id && !props.game.closed;
+});
+
+const canSetIssueStoryPoints = computed<boolean>(() => {
+    return props.game?.ownerId === props.user.id && props.game.closed;
 });
 
 const {
@@ -52,12 +59,25 @@ const { mutate: setGameIssue } = useMutation(SET_GAME_ISSUE, () => ({
     },
 }));
 
+const { mutate: setIssueStoryPoints, onDone: onSetIssueStoryPoints, loading: loadingStoryPoints } = useMutation(
+    SET_ISSUE_STORY_POINTS,
+    () => ({
+        variables: {
+            input: {
+                issueId: props.game.issueId,
+                storyPoints: Number.parseInt(storypoints.value),
+            },
+        },
+    })
+);
+
 watch(
     () => props.game,
     (current, previous) => {
         if (!current.issueId) {
             gameIssue.value = null;
             text.value = '';
+            showStoryPointsUpdateMessange.value = false;
             return;
         }
         if (current.issueId !== previous?.issueId) {
@@ -85,6 +105,10 @@ onGameIssueError((/*error: ApolloError*/) => {
     errors.value = res;
     */
 });
+
+onSetIssueStoryPoints(() => {
+    showStoryPointsUpdateMessange.value = true;
+});
 </script>
 
 <template>
@@ -94,6 +118,30 @@ onGameIssueError((/*error: ApolloError*/) => {
         </pp-grid-item>
         <pp-grid-item v-if="canSetGameIssue" class="tp-align--left margin-b--16" :cols="6">
             <pp-button variant="primary" inline value="Set Jira issue" @click="setGameIssue" />
+        </pp-grid-item>
+        <pp-grid-item
+            v-if="showStoryPointsUpdateMessange"
+            class="tp-align--left margin-b--16"
+            :cols="12"
+        >
+            <pp-text :color="ALL_COLORS.DANGER">Story points updated!</pp-text>
+        </pp-grid-item>
+        <pp-grid-item v-if="canSetIssueStoryPoints" class="padding-r--8" :cols="6">
+            <pp-input v-model.trim="storypoints" placeholder="Set story points" />
+        </pp-grid-item>
+        <pp-grid-item v-if="canSetIssueStoryPoints" class="tp-align--left margin-b--16" :cols="6">
+            <pp-button
+                variant="secondary"
+                inline
+                value="Set story points"
+                :disabled="loadingStoryPoints"
+                @click="
+                    () => {
+                        setIssueStoryPoints();
+                        showStoryPointsUpdateMessange = false;
+                    }
+                "
+            />
         </pp-grid-item>
         <pp-grid-item class="game-issue-recap tp-align--left tp--break-word" :cols="12">
             <template v-if="loading">
