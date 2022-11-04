@@ -1,3 +1,8 @@
+input SetJiraIssueStoryPointsInput {
+    issueId: ID!
+    storyPoints: Int!
+}
+
 type JiraIssueFields {
     summary: String!
     description: String
@@ -11,4 +16,8 @@ type JiraIssue {
 
 type Query {
     getIssue(id: ID!): JiraIssue
+}
+
+type Mutation {
+    setIssueStoryPoints(setIssueStoryPointsInput: SetJiraIssueStoryPointsInput!): ID
 }

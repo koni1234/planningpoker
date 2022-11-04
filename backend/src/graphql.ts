@@ -54,6 +54,11 @@ export interface SetGameIssueInput {
     issueId: string;
 }
 
+export interface SetJiraIssueStoryPointsInput {
+    issueId: string;
+    storyPoints: number;
+}
+
 export interface CreateUserInput {
     name: string;
 }
@@ -82,6 +87,7 @@ export interface IMutation {
     resetGame(resetGameInput: ResetGameInput): Nullable<Game> | Promise<Nullable<Game>>;
     closeGame(closeGameInput: CloseGameInput): Nullable<Game> | Promise<Nullable<Game>>;
     setGameIssue(setGameIssueInput: SetGameIssueInput): Nullable<Game> | Promise<Nullable<Game>>;
+    setIssueStoryPoints(setIssueStoryPointsInput: SetJiraIssueStoryPointsInput): Nullable<string> | Promise<Nullable<string>>;
     createUser(createUserInput: CreateUserInput): Nullable<User> | Promise<Nullable<User>>;
 }
 
