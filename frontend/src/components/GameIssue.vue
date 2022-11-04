@@ -80,30 +80,41 @@ onGameIssueError((/*error: ApolloError*/) => {
 <template>
     <pp-grid class="padding-r--12">
         <pp-grid-item class="padding-r--8" :cols="6">
-            <pp-input v-model.trim="text" placeholder="Enter jira issue id" />
+            <pp-input
+                v-model.trim="text"
+                :disabled="!!game.closed"
+                placeholder="Enter jira issue id"
+            />
         </pp-grid-item>
         <pp-grid-item class="tp-align--left" :cols="6">
-            <pp-button variant="primary" inline value="Set Jira issue" @click="setGameIssue" />
+            <pp-button
+                variant="primary"
+                :disabled="!!game.closed"
+                inline
+                value="Set Jira issue"
+                @click="setGameIssue"
+            />
         </pp-grid-item>
         <pp-grid-item class="game-issue-recap tp-align--left tp--break-word" :cols="12">
-            <div class="border--1 radius--rounded padding--16 margin-t--8 color-bg--white">
-                <template v-if="loading">
-                    <pp-text variant="header-1" class="game-issue-loader">loading</pp-text>
-                </template>
-                <template v-else-if="gameIssue">
-                    <pp-text variant="header-6" class="tp--uppercase" tag="h6">{{
-                        gameIssue.key
-                    }}</pp-text>
-                    <pp-text
-                        variant="header-3 margin-b--16 margin-t--4"
-                        :weight="FONT_WEIGHTS.BOLD"
-                        tag="h3"
-                        >{{ gameIssue.fields.summary }}</pp-text
-                    >
-                    <pp-text variant="text" tag="p">{{
-                        gameIssue.fields.description || 'no description'
-                    }}</pp-text>
-                </template>
+            <template v-if="loading">
+                <pp-text variant="header-1" class="game-issue-loader">loading</pp-text>
+            </template>
+            <div
+                v-else-if="gameIssue"
+                class="border--1 radius--rounded padding--16 margin-t--8 color-bg--white"
+            >
+                <pp-text variant="header-6" class="tp--uppercase" tag="h6">{{
+                    gameIssue.key
+                }}</pp-text>
+                <pp-text
+                    variant="header-3 margin-b--16 margin-t--4"
+                    :weight="FONT_WEIGHTS.BOLD"
+                    tag="h3"
+                    >{{ gameIssue.fields.summary }}</pp-text
+                >
+                <pp-text variant="text" tag="p">{{
+                    gameIssue.fields.description || 'no description'
+                }}</pp-text>
             </div>
         </pp-grid-item>
     </pp-grid>
