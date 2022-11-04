@@ -7,9 +7,12 @@ import { join } from 'path';
 import { GamesModule } from './games/Games.module';
 import { UsersModule } from './users/Users.module';
 import { PubSubModule } from './pubSub/PubSub.module';
+import { JiraModule } from './jira/Jira.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({ isGlobal: true }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       typePaths: ['./**/*.graphql'],
@@ -29,6 +32,7 @@ import { PubSubModule } from './pubSub/PubSub.module';
     PubSubModule,
     GamesModule,
     UsersModule,
+    JiraModule,
   ],
   controllers: [AppController],
   providers: [AppService],

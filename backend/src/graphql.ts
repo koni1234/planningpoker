@@ -63,6 +63,7 @@ export interface Game {
 
 export interface IQuery {
     getGame(id: string): Nullable<Game> | Promise<Nullable<Game>>;
+    getIssue(id: string): Nullable<JiraIssue> | Promise<Nullable<JiraIssue>>;
     getUser(id: string): Nullable<User> | Promise<Nullable<User>>;
 }
 
@@ -79,6 +80,17 @@ export interface IMutation {
 export interface ISubscription {
     gameCreated(): Nullable<Game> | Promise<Nullable<Game>>;
     gameUpdated(gameId: string): Nullable<Game> | Promise<Nullable<Game>>;
+}
+
+export interface JiraIssueFields {
+    summary: string;
+    description?: Nullable<string>;
+}
+
+export interface JiraIssue {
+    id: string;
+    key: string;
+    fields?: Nullable<JiraIssueFields>;
 }
 
 export interface User {

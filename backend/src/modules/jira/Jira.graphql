@@ -1,0 +1,14 @@
+type JiraIssueFields {
+    summary: String!
+    description: String
+}
+
+type JiraIssue {
+    id: ID!
+    key: String!
+    fields: JiraIssueFields
+}
+
+type Query {
+    getIssue(id: ID!): JiraIssue
+}

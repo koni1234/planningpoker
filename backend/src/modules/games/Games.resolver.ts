@@ -8,7 +8,7 @@ import { EnterGameDto } from './dto/input/EnterGame.dto';
 import { LeaveGameDto } from './dto/input/LeaveGame.dto';
 import { VoteDto } from './dto/input/Vote.dto';
 import { CloseGameDto } from './dto/input/CloseGame.dto';
-import {ResetGameDto} from "./dto/input/ResetGame.dto";
+import { ResetGameDto } from './dto/input/ResetGame.dto';
 
 @Resolver('Game')
 export class GamesResolver {
