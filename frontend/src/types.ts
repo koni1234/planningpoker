@@ -16,6 +16,16 @@ export interface GameInterface {
     votingScale: VotingScaleEnum;
     users?: UserInterface[];
     closed: boolean;
+    issueId?: string | null;
+}
+
+export interface GameIssue {
+    id: string;
+    key: string;
+    fields: {
+        summary: string;
+        description: string;
+    };
 }
 
 export interface CreateUserResponseInterface {
@@ -32,4 +42,8 @@ export interface GameUpdatedResponseInterface {
 
 export interface GetGameResponseInterface {
     getGame: GameInterface;
+}
+
+export interface GetGameIssueResponseInterface {
+    getIssue: GameIssue;
 }

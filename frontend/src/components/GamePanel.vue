@@ -6,6 +6,7 @@ import { CREATE_GAME } from '../graphql/mutations/CreateGame';
 import { ENTER_GAME } from '../graphql/mutations/EnterGame';
 import { FetchResult } from '@apollo/client/link/core/types';
 import GameCards from './GameCards.vue';
+import GameIssue from './GameIssue.vue';
 import GameRecap from './GameRecap.vue';
 import GameTable from './GameTable.vue';
 import { LEAVE_GAME } from '../graphql/mutations/LeaveGame';
@@ -170,18 +171,25 @@ window.addEventListener('beforeunload', () => leaveGame);
     </pp-content-bar>
     <pp-grid full-width :direction="FLEX_DIRECTION.COLUMN" :align="FLEX_ALIGN.CENTER">
         <pp-grid-item v-if="props.game" :cols="12">
-            <game-recap
-                v-if="props.game.closed"
-                class="margin-h--40 margin-v--64"
-                :game="props.game"
-            />
-            <game-table :game="props.game" class="margin-h--40 margin-v--64" />
-            <game-cards
-                v-if="!props.game.closed"
-                class="margin-v--64"
-                :voting-scale="props.game.votingScale"
-                @voted="onVote"
-            />
+            <pp-grid full-width>
+                <pp-grid-item :cols="9">
+                    <game-recap
+                        v-if="props.game.closed"
+                        class="margin-h--40 margin-v--64"
+                        :game="props.game"
+                    />
+                    <game-table :game="props.game" class="margin-h--40 margin-v--64" />
+                    <game-cards
+                        v-if="!props.game.closed"
+                        class="margin-v--64"
+                        :voting-scale="props.game.votingScale"
+                        @voted="onVote"
+                    />
+                </pp-grid-item>
+                <pp-grid-item :cols="3">
+                    <game-issue class="margin-v--64" :game="props.game" :user="props.user" />
+                </pp-grid-item>
+            </pp-grid>
         </pp-grid-item>
         <pp-grid-item v-else class="margin-v--64">
             <pp-text variant="header-3" class="margin-b--24" tag="h3">

@@ -9,6 +9,7 @@ export const GET_GAME = gql`
             ownerId
             votingScale
             closed
+            issueId
             users {
                 id
                 name

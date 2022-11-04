@@ -9,6 +9,7 @@ import { LeaveGameDto } from './dto/input/LeaveGame.dto';
 import { VoteDto } from './dto/input/Vote.dto';
 import { CloseGameDto } from './dto/input/CloseGame.dto';
 import { ResetGameDto } from './dto/input/ResetGame.dto';
+import { SetGameIssueDto } from './dto/input/SetGameIssue.dto';
 
 @Resolver('Game')
 export class GamesResolver {
@@ -81,6 +82,17 @@ export class GamesResolver {
   @Mutation('resetGame')
   async resetGame(@Args('resetGameInput') dto: ResetGameDto): Promise<Game> {
     const game = await this.gamesService.resetGame(dto);
+
+    this.pubSub.publish('gameUpdated', game);
+
+    return game;
+  }
+
+  @Mutation('setGameIssue')
+  async setGameIssue(
+    @Args('setGameIssueInput') dto: SetGameIssueDto,
+  ): Promise<Game> {
+    const game = await this.gamesService.setGameIssue(dto);
 
     this.pubSub.publish('gameUpdated', game);
 

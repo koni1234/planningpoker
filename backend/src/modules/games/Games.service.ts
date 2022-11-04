@@ -7,6 +7,7 @@ import { LeaveGameDto } from './dto/input/LeaveGame.dto';
 import { VoteDto } from './dto/input/Vote.dto';
 import { CloseGameDto } from './dto/input/CloseGame.dto';
 import { ResetGameDto } from './dto/input/ResetGame.dto';
+import { SetGameIssueDto } from './dto/input/SetGameIssue.dto';
 
 @Injectable()
 export class GamesService {
@@ -30,6 +31,7 @@ export class GamesService {
         },
       ],
       closed: false,
+      issueId: null,
     };
 
     await this.cacheService.set('game-' + game.id, game, 999999);
@@ -80,6 +82,17 @@ export class GamesService {
 
     if (game.ownerId === dto.userId && !game.closed) {
       game.closed = true;
+      await this.cacheService.set('game-' + game.id, game, 999999);
+    }
+
+    return game;
+  }
+
+  async setGameIssue(dto: SetGameIssueDto): Promise<Game> {
+    const game = await this.getGame(dto.gameId);
+
+    if (game.ownerId === dto.userId && !game.closed) {
+      game.issueId = dto.issueId;
       await this.cacheService.set('game-' + game.id, game, 999999);
     }
 

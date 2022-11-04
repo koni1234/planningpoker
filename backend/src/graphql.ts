@@ -48,6 +48,12 @@ export interface ResetGameInput {
     userId: string;
 }
 
+export interface SetGameIssueInput {
+    gameId: string;
+    userId: string;
+    issueId: string;
+}
+
 export interface CreateUserInput {
     name: string;
 }
@@ -59,6 +65,7 @@ export interface Game {
     votingScale: VotingScaleType;
     closed: boolean;
     users?: Nullable<Nullable<User>[]>;
+    issueId?: Nullable<string>;
 }
 
 export interface IQuery {
@@ -74,6 +81,7 @@ export interface IMutation {
     vote(voteInput: VoteInput): Nullable<Game> | Promise<Nullable<Game>>;
     resetGame(resetGameInput: ResetGameInput): Nullable<Game> | Promise<Nullable<Game>>;
     closeGame(closeGameInput: CloseGameInput): Nullable<Game> | Promise<Nullable<Game>>;
+    setGameIssue(setGameIssueInput: SetGameIssueInput): Nullable<Game> | Promise<Nullable<Game>>;
     createUser(createUserInput: CreateUserInput): Nullable<User> | Promise<Nullable<User>>;
 }
 

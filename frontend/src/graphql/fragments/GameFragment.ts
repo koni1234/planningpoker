@@ -8,6 +8,7 @@ export const GAME_FRAGMENT = gql`
         ownerId
         closed
         votingScale
+        issueId
         ...UsersFragment
     }
     ${USERS_FRAGMENT}
