@@ -104,6 +104,7 @@ export class GamesService {
 
     if (game.ownerId === dto.userId) {
       game.closed = false;
+      game.issueId = null;
       game.users = game.users.map((user) => ({ ...user, vote: null }));
 
       await this.cacheService.set('game-' + game.id, game, 999999);

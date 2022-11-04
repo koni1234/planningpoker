@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { GameInterface, GameIssue, GetGameIssueResponseInterface, UserInterface } from '../types';
-import { ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { useLazyQuery, useMutation } from '@vue/apollo-composable';
 import { FONT_WEIGHTS } from '../ui.enums';
 import { FetchResult } from '@apollo/client/link/core/types';
@@ -23,14 +23,24 @@ const text = ref<string>(props.game.issueId || '');
 //const errors = ref<string[]>([]);
 const gameIssue = ref<GameIssue | null>(null);
 
+const canSetGameIssue = computed<boolean>(() => {
+    return props.game?.ownerId === props.user.id && !props.game.closed;
+});
+
 const {
     load: loadGameIssue,
     onResult: onGameIssueLoaded,
     onError: onGameIssueError,
     loading,
-} = useLazyQuery(GET_GAME_ISSUE, () => ({
-    input: props.game.issueId,
-}));
+} = useLazyQuery(
+    GET_GAME_ISSUE,
+    () => ({
+        input: props.game.issueId,
+    }),
+    () => ({
+        enabled: !!props.game.issueId,
+    })
+);
 
 const { mutate: setGameIssue } = useMutation(SET_GAME_ISSUE, () => ({
     variables: {
@@ -47,6 +57,7 @@ watch(
     (current, previous) => {
         if (!current.issueId) {
             gameIssue.value = null;
+            text.value = '';
             return;
         }
         if (current.issueId !== previous?.issueId) {
@@ -57,7 +68,6 @@ watch(
 );
 
 onGameIssueLoaded((data: FetchResult<GetGameIssueResponseInterface>) => {
-    console.log(data.data);
     gameIssue.value = data.data?.getIssue || null;
 });
 
@@ -79,21 +89,11 @@ onGameIssueError((/*error: ApolloError*/) => {
 
 <template>
     <pp-grid class="padding-r--12">
-        <pp-grid-item class="padding-r--8" :cols="6">
-            <pp-input
-                v-model.trim="text"
-                :disabled="!!game.closed"
-                placeholder="Enter jira issue id"
-            />
+        <pp-grid-item v-if="canSetGameIssue" class="padding-r--8" :cols="6">
+            <pp-input v-model.trim="text" placeholder="Enter jira issue id" />
         </pp-grid-item>
-        <pp-grid-item class="tp-align--left" :cols="6">
-            <pp-button
-                variant="primary"
-                :disabled="!!game.closed"
-                inline
-                value="Set Jira issue"
-                @click="setGameIssue"
-            />
+        <pp-grid-item v-if="canSetGameIssue" class="tp-align--left margin-b--16" :cols="6">
+            <pp-button variant="primary" inline value="Set Jira issue" @click="setGameIssue" />
         </pp-grid-item>
         <pp-grid-item class="game-issue-recap tp-align--left tp--break-word" :cols="12">
             <template v-if="loading">
@@ -101,7 +101,7 @@ onGameIssueError((/*error: ApolloError*/) => {
             </template>
             <div
                 v-else-if="gameIssue"
-                class="border--1 radius--rounded padding--16 margin-t--8 color-bg--white"
+                class="border--1 radius--rounded padding--16 color-bg--white"
             >
                 <pp-text variant="header-6" class="tp--uppercase" tag="h6">{{
                     gameIssue.key
