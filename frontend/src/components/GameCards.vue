@@ -40,6 +40,7 @@ const onVote = (card: string) => {
         :gutters="GRID_GUTTERS.SIZE_16"
         :align="FLEX_ALIGN.CENTER"
         :justify="FLEX_JUSTIFY.CENTER"
+        class="animate__animated animate__slideInLeft"
     >
         <pp-grid-item :cols="12">
             <pp-text variant="header-1" class="margin-b--24" tag="h1"> Choose your card </pp-text>

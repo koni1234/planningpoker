@@ -31,7 +31,7 @@ const canSetGameIssue = computed<boolean>(() => {
 });
 
 const canSetIssueStoryPoints = computed<boolean>(() => {
-    return props.game?.ownerId === props.user.id && props.game.closed;
+    return props.game?.ownerId === props.user.id && props.game.closed && !!gameIssue.value;
 });
 
 const {
@@ -59,17 +59,18 @@ const { mutate: setGameIssue } = useMutation(SET_GAME_ISSUE, () => ({
     },
 }));
 
-const { mutate: setIssueStoryPoints, onDone: onSetIssueStoryPoints, loading: loadingStoryPoints } = useMutation(
-    SET_ISSUE_STORY_POINTS,
-    () => ({
-        variables: {
-            input: {
-                issueId: props.game.issueId,
-                storyPoints: Number.parseInt(storypoints.value),
-            },
+const {
+    mutate: setIssueStoryPoints,
+    onDone: onSetIssueStoryPoints,
+    loading: loadingStoryPoints,
+} = useMutation(SET_ISSUE_STORY_POINTS, () => ({
+    variables: {
+        input: {
+            issueId: props.game.issueId,
+            storyPoints: Number.parseInt(storypoints.value),
         },
-    })
-);
+    },
+}));
 
 watch(
     () => props.game,
@@ -126,10 +127,18 @@ onSetIssueStoryPoints(() => {
         >
             <pp-text :color="ALL_COLORS.DANGER">Story points updated!</pp-text>
         </pp-grid-item>
-        <pp-grid-item v-if="canSetIssueStoryPoints" class="padding-r--8" :cols="6">
+        <pp-grid-item
+            v-if="canSetIssueStoryPoints"
+            class="padding-r--8"
+            :cols="6"
+        >
             <pp-input v-model.trim="storypoints" placeholder="Set story points" />
         </pp-grid-item>
-        <pp-grid-item v-if="canSetIssueStoryPoints" class="tp-align--left margin-b--16" :cols="6">
+        <pp-grid-item
+            v-if="canSetIssueStoryPoints"
+            class="tp-align--left margin-b--16 animate__animated animate__heartBeat"
+            :cols="6"
+        >
             <pp-button
                 variant="secondary"
                 inline
@@ -149,7 +158,7 @@ onSetIssueStoryPoints(() => {
             </template>
             <div
                 v-else-if="gameIssue"
-                class="border--1 radius--rounded padding--16 color-bg--white"
+                class="border--1 radius--rounded padding--16 color-bg--white animate__animated animate__fadeIn"
             >
                 <pp-text variant="header-6" class="tp--uppercase" tag="h6">{{
                     gameIssue.key
@@ -171,6 +180,6 @@ onSetIssueStoryPoints(() => {
 .game-issue-recap {
     white-space: pre-line;
     overflow-y: auto;
-    max-height: 70vh;
+    max-height: 66vh;
 }
 </style>

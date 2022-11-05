@@ -54,7 +54,11 @@ const votes = computed<{ vote: string; totUsers: number }[]>(() => {
         <pp-grid-item :cols="12">
             <pp-text variant="header-1" class="margin-b--24" tag="h1"> Result </pp-text>
         </pp-grid-item>
-        <pp-grid-item v-for="(vote, index) in votes" :key="index" class="game-recap-item">
+        <pp-grid-item
+            v-for="(vote, index) in votes"
+            :key="index"
+            class="game-recap-item animate__animated animate__fadeIn"
+        >
             <div class="recap-card">
                 <pp-text :size="TEXT_SIZES.SIZE_24" :color="ALL_COLORS.BLACK">{{
                     vote.vote

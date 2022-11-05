@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { CreateUserResponseInterface, UserInterface } from '../types';
 import { ALL_COLORS } from '../ui.enums';
-import { ApolloError } from '@apollo/client';
+import { ApolloError } from '@apollo/client/core';
 import { BadUserInputExceptionInterface } from '../exceptions/BadUserInputExceptionInterface';
 import { CREATE_USER } from '../graphql/mutations/CreateUser';
 import { FetchResult } from '@apollo/client/link/core/types';
