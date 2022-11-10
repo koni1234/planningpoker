@@ -34,7 +34,9 @@ export class GamesService {
       issueId: null,
     };
 
-    await this.cacheService.set('game-' + game.id, game, 999999);
+    await this.cacheService.set('game-' + game.id, game, {
+      ttl: 12220,
+    });
 
     return game;
   }
@@ -50,7 +52,9 @@ export class GamesService {
       });
     }
 
-    await this.cacheService.set('game-' + game.id, game, 999999);
+    await this.cacheService.set('game-' + game.id, game, {
+      ttl: 12220,
+    });
 
     return game;
   }
@@ -60,7 +64,9 @@ export class GamesService {
 
     game.users = game.users.filter((user) => user.id !== dto.userId);
 
-    await this.cacheService.set('game-' + game.id, game, 999999);
+    await this.cacheService.set('game-' + game.id, game, {
+      ttl: 12220,
+    });
 
     return game;
   }
@@ -71,7 +77,9 @@ export class GamesService {
 
     if (user && !game.closed) {
       user.vote = dto.vote;
-      await this.cacheService.set('game-' + game.id, game, 999999);
+      await this.cacheService.set('game-' + game.id, game, {
+        ttl: 12220,
+      });
     }
 
     return game;
@@ -82,7 +90,9 @@ export class GamesService {
 
     if (game.ownerId === dto.userId && !game.closed) {
       game.closed = true;
-      await this.cacheService.set('game-' + game.id, game, 999999);
+      await this.cacheService.set('game-' + game.id, game, {
+        ttl: 12220,
+      });
     }
 
     return game;
@@ -93,7 +103,9 @@ export class GamesService {
 
     if (game.ownerId === dto.userId && !game.closed) {
       game.issueId = dto.issueId;
-      await this.cacheService.set('game-' + game.id, game, 999999);
+      await this.cacheService.set('game-' + game.id, game, {
+        ttl: 12220,
+      });
     }
 
     return game;
@@ -107,7 +119,9 @@ export class GamesService {
       game.issueId = null;
       game.users = game.users.map((user) => ({ ...user, vote: null }));
 
-      await this.cacheService.set('game-' + game.id, game, 999999);
+      await this.cacheService.set('game-' + game.id, game, {
+        ttl: 12220,
+      });
     }
 
     return game;

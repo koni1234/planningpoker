@@ -9,6 +9,8 @@ import { UsersModule } from './users/Users.module';
 import { PubSubModule } from './pubSub/PubSub.module';
 import { JiraModule } from './jira/Jira.module';
 import { ConfigModule } from '@nestjs/config';
+import type { RedisClientOptions } from 'redis';
+import * as redisStore from 'cache-manager-redis-store';
 
 @Module({
   imports: [
@@ -24,10 +26,10 @@ import { ConfigModule } from '@nestjs/config';
         'subscriptions-transport-ws': true,
       },
     }),
-    CacheModule.register({
+    CacheModule.register<RedisClientOptions>({
       isGlobal: true,
-      host: process.env.REDIS_HOST,
-      port: process.env.REDIS_PORT,
+      store: redisStore,
+      url: 'redis://' + process.env.REDIS_HOST + ':' + process.env.REDIS_PORT,
     }),
     PubSubModule,
     GamesModule,

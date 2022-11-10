@@ -18,7 +18,9 @@ export class UsersService {
       id: uuidv4(),
     };
 
-    await this.cacheService.set('user-' + user.id, user, 999999);
+    await this.cacheService.set('user-' + user.id, user, {
+      ttl: 12220,
+    });
 
     return user;
   }

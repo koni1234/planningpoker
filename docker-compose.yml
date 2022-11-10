@@ -1,3 +1,4 @@
+version: '3.9'
 services:
   backend:
     build:
@@ -8,11 +9,11 @@ services:
     volumes:
       - ./backend/:/app
     ports:
-      - 3000:3000
+      - "3000:3000"
     depends_on:
       - redis
-    networks:
-      - app
+   # networks:
+    #  - app
   frontend:
     build:
       context: ./frontend
@@ -22,16 +23,25 @@ services:
     tty: true
     ports:
       - 80:8080
-    networks:
-      - app
+#    networks:
+#      - app
   redis:
-    image: redis
+    image: redis:6.0
     ports:
-      - 6379:6379
+      - "6379:6379"
     volumes:
       - redis:/data
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    restart: always
+    environment:
+      - REDIS_HOSTS=local:redis:6379
+    ports:
+      - "8081:8081"
+    depends_on:
+      - redis
 volumes:
   redis:
     driver: local
-networks:
-  app:
+#networks:
+#  app:
