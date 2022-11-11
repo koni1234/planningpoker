@@ -4,6 +4,7 @@ import { computed, ref } from 'vue';
 import PpGrid from './common/PpGrid.vue';
 import PpGridItem from './common/PpGridItem.vue';
 import PpText from './common/PpText.vue';
+import { VOTING_SCALES_VALUES } from '../constants';
 import { VotingScaleEnum } from '../types';
 
 interface Props {
@@ -19,9 +20,7 @@ const emit = defineEmits<{
 }>();
 
 const cards = computed<string[]>(() => {
-    return props.votingScale === VotingScaleEnum.tshirt
-        ? ['xxs', 'xs', 's', 'm', 'l', 'xl', 'xxl', '☕']
-        : ['1', '2', '3', '5', '8', '13', '21', '☕'];
+    return [...VOTING_SCALES_VALUES[props.votingScale], '☕'];
 });
 
 const cssClasses = (card: string): string[] => {

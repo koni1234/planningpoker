@@ -1,0 +1,91 @@
+:root {
+  --ms-font-size: #{$font-size--14};
+  --ms-line-height: 1.375;
+  --ms-bg: #{$color--white};
+  --ms-bg-disabled: #F3F4F6;
+  --ms-border-color: #{$color--grey-3};
+  --ms-border-width: 1px;
+  --ms-radius: #{$radius--4};
+  --ms-py: 0.5rem;
+  --ms-px: 0.875rem;
+  --ms-ring-width: 3px;
+  --ms-ring-color: #10B98130;
+  --ms-placeholder-color: #9CA3AF;
+  --ms-max-height: 10rem;
+
+  --ms-spinner-color: #{$color--primary};
+  --ms-caret-color: #999999;
+  --ms-clear-color: #999999;
+  --ms-clear-color-hover: #000000;
+
+  --ms-tag-font-size: #{$font-size--11};
+  --ms-tag-line-height: 1.25rem;
+  --ms-tag-font-weight: 600;
+  --ms-tag-bg: #{$color--green};
+  --ms-tag-bg-disabled: #9CA3AF;
+  --ms-tag-color: #{$color--white};
+  --ms-tag-color-disabled: #{$color--white};
+  --ms-tag-radius: #{$radius--4};
+  --ms-tag-py: 0.125rem;
+  --ms-tag-px: 0.5rem;
+  --ms-tag-my: 0.25rem;
+  --ms-tag-mx: 0.25rem;
+
+  --ms-tag-remove-radius: #{$radius--4};
+  --ms-tag-remove-py: 0.25rem;
+  --ms-tag-remove-px: 0.25rem;
+  --ms-tag-remove-my: 0rem;
+  --ms-tag-remove-mx: 0.125rem;
+
+  --ms-dropdown-bg: #{$color--white};
+  --ms-dropdown-border-color: #D1D5DB;
+  --ms-dropdown-border-width: #{$border--1};
+  --ms-dropdown-radius: #{$radius--4};
+
+  --ms-group-label-py: 0.3rem;
+  --ms-group-label-px: 0.75rem;
+  --ms-group-label-line-height: 1.375;
+  --ms-group-label-bg: #E5E7EB;
+  --ms-group-label-color: #{$color--text};
+  --ms-group-label-bg-pointed: #D1D5DB;
+  --ms-group-label-color-pointed: #{$color--text};
+  --ms-group-label-bg-disabled: #F3F4F6;
+  --ms-group-label-color-disabled: #D1D5DB;
+  --ms-group-label-bg-selected: #{$color--primary};
+  --ms-group-label-color-selected: #{$color--white};
+  --ms-group-label-bg-selected-pointed: #{$color--primary};
+  --ms-group-label-color-selected-pointed: #{$color--white};
+  --ms-group-label-bg-selected-disabled: #{$color--primary-light};
+  --ms-group-label-color-selected-disabled: #{$color--primary-light};
+
+  --ms-option-font-size: #{$font-size--14};
+  --ms-option-line-height: 1.375;
+  --ms-option-bg-pointed: #{$color--primary-alpha};
+  --ms-option-color-pointed: #{$color--text};
+  --ms-option-bg-selected: #{$color--primary-alpha};
+  --ms-option-color-selected: #{$color--text};
+  --ms-option-bg-disabled: #{$color--white};
+  --ms-option-color-disabled: #D1D5DB;
+  --ms-option-bg-selected-pointed: #{$color--primary-alpha};
+  --ms-option-color-selected-pointed: #{$color--text};
+  --ms-option-bg-selected-disabled: #{$color--white};
+  --ms-option-color-selected-disabled: #D1FAE5;
+  --ms-option-py: 0.5rem;
+  --ms-option-px: 0.75rem;
+
+  --ms-empty-color: #{$color--text};
+}
+
+@import '@vueform/multiselect/themes/default.scss';
+
+.multiselect {
+  min-height: $input-height;
+
+  &.is-active {
+    box-shadow: none;
+  }
+
+  &-dropdown {
+    z-index: $z-index--modal;
+  }
+}

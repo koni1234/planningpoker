@@ -1,10 +1,11 @@
 <script setup lang="ts">
+import { ALL_COLORS, FONT_WEIGHTS } from '../ui.enums';
 import { GameInterface, GameIssue, GetGameIssueResponseInterface, UserInterface } from '../types';
 import { computed, ref, watch } from 'vue';
 import { useLazyQuery, useMutation } from '@vue/apollo-composable';
-import { ALL_COLORS, FONT_WEIGHTS } from '../ui.enums';
 import { FetchResult } from '@apollo/client/link/core/types';
 import { GET_GAME_ISSUE } from '../graphql/queries/GetGameIssue';
+import Multiselect from '@vueform/multiselect';
 import PpButton from './common/PpButton.vue';
 import PpGrid from './common/PpGrid.vue';
 import PpGridItem from './common/PpGridItem.vue';
@@ -12,6 +13,7 @@ import PpInput from './common/PpInput.vue';
 import PpText from './common/PpText.vue';
 import { SET_GAME_ISSUE } from '../graphql/mutations/SetGameIssue';
 import { SET_ISSUE_STORY_POINTS } from '../graphql/mutations/SetIssueStoryPoints';
+import { VOTING_SCALES_VALUES } from '../constants';
 
 interface Props {
     user: UserInterface;
@@ -23,7 +25,6 @@ const props = defineProps<Props>();
 const text = ref<string>(props.game.issueId || '');
 const showStoryPointsUpdateMessange = ref<boolean>(false);
 const storypoints = ref<string>('5');
-//const errors = ref<string[]>([]);
 const gameIssue = ref<GameIssue | null>(null);
 
 const canSetGameIssue = computed<boolean>(() => {
@@ -92,19 +93,8 @@ onGameIssueLoaded((data: FetchResult<GetGameIssueResponseInterface>) => {
     gameIssue.value = data.data?.getIssue || null;
 });
 
-onGameIssueError((/*error: ApolloError*/) => {
+onGameIssueError(() => {
     gameIssue.value = null;
-    //  debugger;
-    /*
-    const errorResponse = error.graphQLErrors.at(0)?.extensions;
-    let res: string[] = [];
-  
-    if (errorResponse?.code === 'BAD_USER_INPUT') {
-      res = (errorResponse as BadUserInputExceptionInterface).response.message || [];
-    }
-  
-    errors.value = res;
-    */
 });
 
 onSetIssueStoryPoints(() => {
@@ -114,12 +104,14 @@ onSetIssueStoryPoints(() => {
 
 <template>
     <pp-grid class="padding-r--12">
-        <pp-grid-item v-if="canSetGameIssue" class="padding-r--8" :cols="6">
-            <pp-input v-model.trim="text" placeholder="Enter jira issue id" />
-        </pp-grid-item>
-        <pp-grid-item v-if="canSetGameIssue" class="tp-align--left margin-b--16" :cols="6">
-            <pp-button variant="primary" inline value="Set Jira issue" @click="setGameIssue" />
-        </pp-grid-item>
+        <template v-if="canSetGameIssue">
+            <pp-grid-item class="padding-r--8" :cols="6">
+                <pp-input v-model.trim="text" placeholder="Enter jira issue id" />
+            </pp-grid-item>
+            <pp-grid-item class="tp-align--left margin-b--16" :cols="6">
+                <pp-button variant="primary" inline value="Set Jira issue" @click="setGameIssue" />
+            </pp-grid-item>
+        </template>
         <pp-grid-item
             v-if="showStoryPointsUpdateMessange"
             class="tp-align--left margin-b--16"
@@ -127,40 +119,48 @@ onSetIssueStoryPoints(() => {
         >
             <pp-text :color="ALL_COLORS.DANGER">Story points updated!</pp-text>
         </pp-grid-item>
-        <pp-grid-item v-if="canSetIssueStoryPoints" class="padding-r--8" :cols="6">
-            <pp-input v-model.trim="storypoints" placeholder="Set story points" />
-        </pp-grid-item>
-        <pp-grid-item
-            v-if="canSetIssueStoryPoints"
-            class="tp-align--left margin-b--16 animate__animated animate__heartBeat"
-            :cols="6"
-        >
-            <pp-button
-                variant="secondary"
-                inline
-                value="Set story points"
-                :disabled="loadingStoryPoints"
-                @click="
-                    () => {
-                        setIssueStoryPoints();
-                        showStoryPointsUpdateMessange = false;
-                    }
-                "
-            />
-        </pp-grid-item>
+        <template v-if="canSetIssueStoryPoints">
+            <pp-grid-item class="padding-r--8" :cols="6">
+                <multiselect
+                    v-model="storypoints"
+                    placeholder="Set story points"
+                    :object="false"
+                    :can-clear="false"
+                    :options="VOTING_SCALES_VALUES[props.game.votingScale]"
+                />
+            </pp-grid-item>
+            <pp-grid-item
+                class="tp-align--left margin-b--16 animate__animated animate__heartBeat"
+                :cols="6"
+            >
+                <pp-button
+                    variant="secondary"
+                    inline
+                    value="Set story points"
+                    :disabled="loadingStoryPoints"
+                    @click="
+                        () => {
+                            setIssueStoryPoints();
+                            showStoryPointsUpdateMessange = false;
+                        }
+                    "
+                />
+            </pp-grid-item>
+        </template>
         <pp-grid-item class="game-issue-recap tp-align--left tp--break-word" :cols="12">
             <template v-if="loading">
                 <pp-text variant="header-1" class="game-issue-loader">loading</pp-text>
             </template>
             <div
                 v-else-if="gameIssue"
-                class="border--1 radius--rounded padding--16 color-bg--white animate__animated animate__fadeIn"
+                class="border--1 radius--rounded padding--16 color-bg--white"
             >
                 <pp-text variant="header-6" class="tp--uppercase" tag="h6">{{
                     gameIssue.key
                 }}</pp-text>
                 <pp-text
-                    variant="header-3 margin-b--16 margin-t--4"
+                    variant="header-3"
+                    class="margin-b--16 margin-t--4"
                     :weight="FONT_WEIGHTS.BOLD"
                     tag="h3"
                     >{{ gameIssue.fields.summary }}</pp-text
