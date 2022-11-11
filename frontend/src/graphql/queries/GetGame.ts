@@ -14,6 +14,7 @@ export const GET_GAME = gql`
                 id
                 name
                 vote
+                online
             }
             ...GameFragment
         }

@@ -111,6 +111,7 @@ export interface User {
     id: string;
     name: string;
     vote?: Nullable<string>;
+    online?: Nullable<boolean>;
 }
 
 type Nullable<T> = T | null;

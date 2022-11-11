@@ -1,7 +1,7 @@
 import { CACHE_MANAGER, Inject, Injectable } from '@nestjs/common';
 import { Cache } from 'cache-manager';
 import { CreateGameDto } from './dto/input/CreateGame.dto';
-import { Game } from '../../graphql';
+import { Game, User } from '../../graphql';
 import { EnterGameDto } from './dto/input/EnterGame.dto';
 import { LeaveGameDto } from './dto/input/LeaveGame.dto';
 import { VoteDto } from './dto/input/Vote.dto';
@@ -27,6 +27,7 @@ export class GamesService {
         {
           id: dto.ownerId,
           name: dto.ownerName,
+          online: true,
           vote: null,
         },
       ],
@@ -43,11 +44,15 @@ export class GamesService {
 
   async enterGame(dto: EnterGameDto): Promise<Game> {
     const game = await this.getGame(dto.gameId);
+    const gameUser = game.users.find((user) => user.id === dto.userId);
 
-    if (!game.users.find((user) => user.id === dto.userId)) {
+    if (gameUser) {
+      gameUser.online = true;
+    } else {
       game.users.push({
         id: dto.userId,
         name: dto.userName,
+        online: true,
         vote: null,
       });
     }
@@ -56,13 +61,20 @@ export class GamesService {
       ttl: 12220,
     });
 
+    console.log(game.users);
+
     return game;
   }
 
   async leaveGame(dto: LeaveGameDto): Promise<Game> {
     const game = await this.getGame(dto.gameId);
+    const gameUser = game.users.find((user) => user.id === dto.userId);
 
-    game.users = game.users.filter((user) => user.id !== dto.userId);
+    if (gameUser.vote) {
+      gameUser.online = false;
+    } else {
+      game.users = game.users.filter((user) => user.id !== dto.userId);
+    }
 
     await this.cacheService.set('game-' + game.id, game, {
       ttl: 12220,
@@ -117,7 +129,12 @@ export class GamesService {
     if (game.ownerId === dto.userId) {
       game.closed = false;
       game.issueId = null;
-      game.users = game.users.map((user) => ({ ...user, vote: null }));
+      game.users = game.users.reduce((onlineUsers: User[], user: User) => {
+        if (!!user.online) {
+          onlineUsers.push({ ...user, vote: null });
+        }
+        return onlineUsers;
+      }, []);
 
       await this.cacheService.set('game-' + game.id, game, {
         ttl: 12220,

@@ -30,7 +30,13 @@ const props = defineProps<Props>();
         <template v-for="(user, index) in props.game.users" :key="index">
             <pp-grid-item class="vote-wrapper animate__animated animate__fadeIn">
                 <pp-text class="margin-b--8 tp--truncate">{{ user.name }}</pp-text>
-                <div class="vote" :class="{ 'has-voted': !!user.vote || props.game.closed }">
+                <div
+                    class="vote"
+                    :class="{
+                        'has-voted': !!user.vote || props.game.closed,
+                        'is-disabled': !user.online,
+                    }"
+                >
                     <pp-text
                         v-if="props.game.closed"
                         :size="TEXT_SIZES.SIZE_24"

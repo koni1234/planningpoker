@@ -6,7 +6,7 @@ import {
     GetUserResponseInterface,
     UserInterface,
 } from '../types';
-import { computed, ref } from 'vue';
+import { computed, nextTick, ref } from 'vue';
 import { useLazyQuery, useMutation, useSubscription } from '@vue/apollo-composable';
 import { ENTER_GAME } from '../graphql/mutations/EnterGame';
 import { FetchResult } from '@apollo/client/link/core/types';
@@ -44,19 +44,10 @@ const loading = computed<boolean>(() => {
 });
 
 onGameLoaded((data: FetchResult<GetGameResponseInterface>) => {
-    game.value = data.data?.getGame
-        ? {
-              ...data.data.getGame,
-              users: data.data.getGame.users ? [...data.data.getGame.users] : [],
-          }
-        : null;
-    if (game.value && !game.value.users?.find((user) => user.id === userdata.value.id)) {
-        game.value.users?.push({
-            ...userdata.value,
-            vote: null,
-        });
+    game.value = data.data?.getGame || null;
 
-        enterGame();
+    if (game.value?.id) {
+        nextTick(enterGame);
     }
 });
 

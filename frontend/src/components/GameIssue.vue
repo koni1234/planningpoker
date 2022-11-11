@@ -127,11 +127,7 @@ onSetIssueStoryPoints(() => {
         >
             <pp-text :color="ALL_COLORS.DANGER">Story points updated!</pp-text>
         </pp-grid-item>
-        <pp-grid-item
-            v-if="canSetIssueStoryPoints"
-            class="padding-r--8"
-            :cols="6"
-        >
+        <pp-grid-item v-if="canSetIssueStoryPoints" class="padding-r--8" :cols="6">
             <pp-input v-model.trim="storypoints" placeholder="Set story points" />
         </pp-grid-item>
         <pp-grid-item

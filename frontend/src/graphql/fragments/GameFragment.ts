@@ -1,4 +1,4 @@
-import { USERS_FRAGMENT } from './UsersFragment';
+import { GAME_USERS_FRAGMENT } from './GameUsersFragment';
 import gql from 'graphql-tag';
 
 export const GAME_FRAGMENT = gql`
@@ -9,7 +9,7 @@ export const GAME_FRAGMENT = gql`
         closed
         votingScale
         issueId
-        ...UsersFragment
+        ...GameUsersFragment
     }
-    ${USERS_FRAGMENT}
+    ${GAME_USERS_FRAGMENT}
 `;

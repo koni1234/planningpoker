@@ -7,6 +7,7 @@ export interface UserInterface {
     id: string;
     name: string;
     vote?: string | null;
+    online?: boolean;
 }
 
 export interface GameInterface {

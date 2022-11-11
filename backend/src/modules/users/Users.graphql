@@ -6,6 +6,7 @@ type User {
     id: ID!
     name: String!
     vote: String
+    online: Boolean
 }
 
 type Query {

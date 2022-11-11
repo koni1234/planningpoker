@@ -148,7 +148,10 @@ onResetGame(() => {
     }
 });
 
-window.addEventListener('beforeunload', () => leaveGame);
+window.addEventListener('beforeunload', (e) => {
+    leaveGame();
+    e.returnValue = 'onbeforeunload';
+});
 </script>
 
 <template>
