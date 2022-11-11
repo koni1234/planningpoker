@@ -3,18 +3,20 @@ import {
     GameInterface,
     GameUpdatedResponseInterface,
     GetGameResponseInterface,
+    GetUserResponseInterface,
     UserInterface,
 } from '../types';
+import { computed, ref } from 'vue';
 import { useLazyQuery, useMutation, useSubscription } from '@vue/apollo-composable';
 import { ENTER_GAME } from '../graphql/mutations/EnterGame';
 import { FetchResult } from '@apollo/client/link/core/types';
 import { GAME_UPDATED } from '../graphql/subscriptions/GameUpdate';
 import { GET_GAME } from '../graphql/queries/GetGame';
+import { GET_USER } from '../graphql/queries/GetUser';
 import GamePanel from './GamePanel.vue';
 import LoginPanel from './LoginPanel.vue';
 import PpText from './common/PpText.vue';
 import { StorageProvider } from '../services/storage/StorageProvider';
-import { ref } from 'vue';
 
 const urlPath = window.location.pathname.substring(1);
 const localStorage = StorageProvider.localStorage();
@@ -24,9 +26,21 @@ const game = ref<GameInterface | null>(null);
 const {
     load: loadGame,
     onResult: onGameLoaded,
-    loading,
+    loading: loadingGame,
 } = useLazyQuery(GET_GAME, {
     input: urlPath,
+});
+
+const {
+    load: loadUser,
+    onResult: onUserLoaded,
+    loading: loadingUser,
+} = useLazyQuery(GET_USER, {
+    input: userdata.value.id,
+});
+
+const loading = computed<boolean>(() => {
+    return !!(loadingGame.value || loadingUser.value);
 });
 
 onGameLoaded((data: FetchResult<GetGameResponseInterface>) => {
@@ -43,6 +57,14 @@ onGameLoaded((data: FetchResult<GetGameResponseInterface>) => {
         });
 
         enterGame();
+    }
+});
+
+onUserLoaded((data: FetchResult<GetUserResponseInterface>) => {
+    if (!data.data?.getUser) {
+        userdata.value.id = '';
+    } else if (urlPath) {
+        loadGame();
     }
 });
 
@@ -94,15 +116,14 @@ const { mutate: enterGame } = useMutation(ENTER_GAME, () => ({
 }));
 
 const onLeaveGame = () => {
-    //setUser({ id: '', name: '' });
     window.history.replaceState(window.location.href, '', '/');
     game.value = null;
 };
 
 subscribeGame();
 
-if (userdata.value.id && urlPath) {
-    loadGame();
+if (userdata.value.id) {
+    loadUser();
 }
 </script>
 

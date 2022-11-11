@@ -32,6 +32,10 @@ export interface CreateUserResponseInterface {
     createUser: UserInterface;
 }
 
+export interface GetUserResponseInterface {
+    getUser: UserInterface;
+}
+
 export interface CreateGameResponseInterface {
     createGame: GameInterface;
 }
