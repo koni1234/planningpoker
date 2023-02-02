@@ -4,13 +4,14 @@ input SetJiraIssueStoryPointsInput {
 }
 
 type JiraIssueFields {
-    summary: String!
+    summary: String
     description: String
 }
 
 type JiraIssue {
     id: ID!
     key: String!
+    renderedFields: JiraIssueFields
     fields: JiraIssueFields
 }
 

@@ -97,13 +97,14 @@ export interface ISubscription {
 }
 
 export interface JiraIssueFields {
-    summary: string;
+    summary?: Nullable<string>;
     description?: Nullable<string>;
 }
 
 export interface JiraIssue {
     id: string;
     key: string;
+    renderedFields?: Nullable<JiraIssueFields>;
     fields?: Nullable<JiraIssueFields>;
 }
 

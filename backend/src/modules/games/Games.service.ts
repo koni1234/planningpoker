@@ -61,8 +61,6 @@ export class GamesService {
       ttl: 12220,
     });
 
-    console.log(game.users);
-
     return game;
   }
 

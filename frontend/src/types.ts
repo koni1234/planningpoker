@@ -1,6 +1,6 @@
 export enum VotingScaleEnum {
     fibonacci = 'fibonacci',
-    tshirt = 'tshirt',
+    //tshirt = 'tshirt',
 }
 
 export interface UserInterface {
@@ -23,6 +23,9 @@ export interface GameInterface {
 export interface GameIssue {
     id: string;
     key: string;
+    renderedFields: {
+        description: string;
+    };
     fields: {
         summary: string;
         description: string;

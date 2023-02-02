@@ -1,6 +1,5 @@
 import { UsersService } from '../../../src/modules/users/Users.service';
 import { Test, TestingModule } from '@nestjs/testing';
-import { UsersResolver } from '../../../src/modules/users/Users.resolver';
 import { CACHE_MANAGER } from '@nestjs/common';
 import { CreateUserDto } from '../../../src/modules/users/dto/input/CreateUser.dto';
 
@@ -10,6 +9,7 @@ jest.mock('uuid', () => ({
 
 describe('UsersService', () => {
   let service: UsersService;
+  let module: TestingModule;
 
   const mockedCache = {
     get: jest.fn(),
@@ -17,10 +17,9 @@ describe('UsersService', () => {
   };
 
   beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
+    module = await Test.createTestingModule({
       providers: [
         UsersService,
-        UsersResolver,
         {
           provide: CACHE_MANAGER,
           useValue: mockedCache,
@@ -29,6 +28,11 @@ describe('UsersService', () => {
     }).compile();
 
     service = module.get<UsersService>(UsersService);
+  });
+
+  afterEach(() => {
+    module.close();
+    jest.clearAllMocks();
   });
 
   it('Should be defined', () => {

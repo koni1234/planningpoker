@@ -41,9 +41,19 @@
         resize: none !important;
     }
 
+    &-resizable {
+        resize: horizontal;
+        overflow: auto;
+    }
+
     &-disabled {
         pointer-events: none !important;
         opacity: .6 !important;
+    }
+
+    &-sticky {
+        position: sticky;
+        top: 0;
     }
 }
 

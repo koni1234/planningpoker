@@ -6,6 +6,9 @@ export const GET_GAME_ISSUE = gql`
         getIssue(id: $input) {
             id
             key
+            renderedFields {
+                description
+            }
             fields {
                 summary
                 description

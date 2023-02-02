@@ -8,7 +8,7 @@ export class JiraService {
   constructor(@Inject('JIRA_API') private jiraApi: JiraApi) {}
 
   async getIssue(id: string): Promise<JiraIssue | null> {
-    const response = await this.jiraApi.findIssue(id);
+    const response = await this.jiraApi.findIssue(id, 'renderedFields');
 
     return response ? (response as JiraIssue) : null;
   }

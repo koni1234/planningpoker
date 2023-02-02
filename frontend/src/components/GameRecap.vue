@@ -12,6 +12,7 @@ import PpGrid from './common/PpGrid.vue';
 import PpGridItem from './common/PpGridItem.vue';
 import PpText from './common/PpText.vue';
 import { computed } from 'vue';
+import { mean } from 'lodash-es';
 
 interface Props {
     game: GameInterface;
@@ -41,6 +42,17 @@ const votes = computed<{ vote: string; totUsers: number }[]>(() => {
 
     return votes.sort((a, b) => a.totUsers - b.totUsers);
 });
+
+const average = computed<number | string>(() => {
+    const votes: number[] =
+        props.game.users
+            ?.filter(
+                (user: UserInterface) => user.vote && !Number.isNaN(Number.parseInt(user.vote))
+            )
+            .map((user): number => Number.parseInt(user.vote as string)) || [];
+
+    return votes.length ? mean(votes) : '??';
+});
 </script>
 
 <template>
@@ -60,11 +72,16 @@ const votes = computed<{ vote: string; totUsers: number }[]>(() => {
             class="game-recap-item animate__animated animate__fadeIn"
         >
             <div class="recap-card">
-                <pp-text :size="TEXT_SIZES.SIZE_24" :color="ALL_COLORS.BLACK">{{
-                    vote.vote
-                }}</pp-text>
+                <pp-text :size="TEXT_SIZES.SIZE_24" :color="ALL_COLORS.BLACK">
+                    {{ vote.vote }}
+                </pp-text>
             </div>
             <pp-text class="margin-v--12">{{ vote.totUsers }} votes</pp-text>
+        </pp-grid-item>
+        <pp-grid-item :cols="12">
+            <pp-text variant="header-3" class="margin-v--12" tag="h3">
+                Average: {{ average }}
+            </pp-text>
         </pp-grid-item>
     </pp-grid>
 </template>

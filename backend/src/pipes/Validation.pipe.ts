@@ -6,6 +6,7 @@ import {
 } from '@nestjs/common';
 import { validate } from 'class-validator';
 import { plainToInstance } from 'class-transformer';
+import { Type } from '@nestjs/common/interfaces/type.interface';
 
 @Injectable()
 export class ValidationPipe implements PipeTransform<any> {
@@ -21,8 +22,8 @@ export class ValidationPipe implements PipeTransform<any> {
     return value;
   }
 
-  private toValidate(metatype: Function): boolean {
-    const types: Function[] = [String, Boolean, Number, Array, Object];
+  private toValidate(metatype: Type): boolean {
+    const types: Type[] = [String, Boolean, Number, Array, Object];
     return !types.includes(metatype);
   }
 }

@@ -1,9 +1,14 @@
 <script setup lang="ts">
-import { CreateGameResponseInterface, GameInterface, UserInterface } from '../types';
+import {
+    CreateGameResponseInterface,
+    GameInterface,
+    UserInterface,
+    VotingScaleEnum,
+} from '../types';
 import { FLEX_ALIGN, FLEX_DIRECTION } from '../ui.enums';
+import { computed, ref } from 'vue';
 import { CLOSE_GAME } from '../graphql/mutations/CloseGame';
 import { CREATE_GAME } from '../graphql/mutations/CreateGame';
-import { ENTER_GAME } from '../graphql/mutations/EnterGame';
 import { FetchResult } from '@apollo/client/link/core/types';
 import GameCards from './GameCards.vue';
 import GameIssue from './GameIssue.vue';
@@ -18,7 +23,6 @@ import PpGridItem from './common/PpGridItem.vue';
 import PpText from './common/PpText.vue';
 import { RESET_GAME } from '../graphql/mutations/ResetGame';
 import { VOTE } from '../graphql/mutations/Vote';
-import { computed } from 'vue';
 import { useMutation } from '@vue/apollo-composable';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -34,18 +38,13 @@ const emit = defineEmits<{
     (e: 'leaveGame'): void;
 }>();
 
+const gameIssue = ref<InstanceType<typeof GameIssue> | null>(null);
+
+const canShowGameIssueColumn = computed<boolean>(() => {
+    return !!gameIssue.value?.gameIssue || props.game?.ownerId === props.user.id;
+});
+
 const newGameId = uuidv4();
-
-const alexIsHere = computed<boolean>(() => {
-    return !!props.game?.users?.find((user) => user.id === 'alex');
-});
-
-const canInviteAlex = computed(() => {
-    return (
-        props.game?.ownerId === props.user.id &&
-        !props.game.users?.find((user) => user.id === 'alex')
-    );
-});
 
 const canCloseGame = computed<boolean>(() => {
     return props.game?.ownerId === props.user.id && !props.game.closed;
@@ -62,7 +61,7 @@ const { mutate: createGame, onDone: onCreateGame } = useMutation(CREATE_GAME, ()
             ownerId: props.user.id,
             ownerName: props.user.name,
             name: 'test',
-            votingScale: 'fibonacci',
+            votingScale: VotingScaleEnum.fibonacci.valueOf(),
         },
     },
 }));
@@ -78,42 +77,6 @@ const { mutate: leaveGame, onDone: onLeaveGame } = useMutation(LEAVE_GAME, () =>
 
 const { mutate: voteGame } = useMutation(VOTE);
 
-const addAlexVote = () => {
-    const choices = ['💯', '🙈', '💩', '⚽', '⛳', '🎯', '🎱', '🏀', '🏉', '💸', '💉', '🦄', '🏇'];
-
-    voteGame({
-        input: {
-            gameId: props.game?.id,
-            userId: 'alex',
-            vote: choices[Math.floor(Math.random() * choices.length)],
-        },
-    });
-};
-
-const onVote = async (vote: string) => {
-    await voteGame({
-        input: {
-            gameId: props.game?.id,
-            userId: props.user.id,
-            vote,
-        },
-    });
-
-    if (alexIsHere.value) {
-        addAlexVote();
-    }
-};
-
-const { mutate: playWithAlex } = useMutation(ENTER_GAME, () => ({
-    variables: {
-        input: {
-            gameId: props.game?.id,
-            userId: 'alex',
-            userName: 'Alex Chesterman OBE',
-        },
-    },
-}));
-
 const { mutate: revealCards } = useMutation(CLOSE_GAME, () => ({
     variables: {
         input: {
@@ -123,7 +86,7 @@ const { mutate: revealCards } = useMutation(CLOSE_GAME, () => ({
     },
 }));
 
-const { mutate: resetGame, onDone: onResetGame } = useMutation(RESET_GAME, () => ({
+const { mutate: resetGame } = useMutation(RESET_GAME, () => ({
     variables: {
         input: {
             gameId: props.game?.id,
@@ -131,6 +94,16 @@ const { mutate: resetGame, onDone: onResetGame } = useMutation(RESET_GAME, () =>
         },
     },
 }));
+
+const onVote = async (vote: string) => {
+    await voteGame({
+        input: {
+            gameId: props.game?.id,
+            userId: props.user.id,
+            vote,
+        },
+    });
+};
 
 onCreateGame((data: FetchResult<CreateGameResponseInterface>) => {
     if (data.data?.createGame) {
@@ -140,12 +113,6 @@ onCreateGame((data: FetchResult<CreateGameResponseInterface>) => {
 
 onLeaveGame(() => {
     emit('leaveGame');
-});
-
-onResetGame(() => {
-    if (alexIsHere.value) {
-        window.setTimeout(addAlexVote, 3000);
-    }
 });
 
 window.addEventListener('beforeunload', (e) => {
@@ -158,9 +125,6 @@ window.addEventListener('beforeunload', (e) => {
     <pp-content-bar>
         <pp-content-bar-item v-if="props.game">
             <pp-button> Invite players </pp-button>
-        </pp-content-bar-item>
-        <pp-content-bar-item v-if="canInviteAlex">
-            <pp-button @click="playWithAlex"> Invite Alex </pp-button>
         </pp-content-bar-item>
         <pp-content-bar-item v-if="props.game">
             <pp-button variant="danger-outline" @click="leaveGame"> Leave the game </pp-button>
@@ -175,7 +139,10 @@ window.addEventListener('beforeunload', (e) => {
     <pp-grid full-width :direction="FLEX_DIRECTION.COLUMN" :align="FLEX_ALIGN.CENTER">
         <pp-grid-item v-if="props.game" :cols="12">
             <pp-grid full-width>
-                <pp-grid-item :cols="9">
+                <pp-grid-item
+                    :cols="canShowGameIssueColumn ? 8 : 12"
+                    class="is-resizable flex-none"
+                >
                     <game-recap
                         v-if="props.game.closed"
                         class="margin-h--40 margin-v--64"
@@ -189,8 +156,13 @@ window.addEventListener('beforeunload', (e) => {
                         @voted="onVote"
                     />
                 </pp-grid-item>
-                <pp-grid-item :cols="3">
-                    <game-issue class="margin-v--64" :game="props.game" :user="props.user" />
+                <pp-grid-item v-show="canShowGameIssueColumn">
+                    <game-issue
+                        ref="gameIssue"
+                        class="margin-v--64"
+                        :game="props.game"
+                        :user="props.user"
+                    />
                 </pp-grid-item>
             </pp-grid>
         </pp-grid-item>

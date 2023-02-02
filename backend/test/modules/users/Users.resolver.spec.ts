@@ -5,6 +5,7 @@ import { UsersService } from '../../../src/modules/users/Users.service';
 
 describe('UsersResolver', () => {
   let resolver: UsersResolver;
+  let module: TestingModule;
 
   const mockedUsersService = {
     getUser: jest.fn(),
@@ -12,7 +13,7 @@ describe('UsersResolver', () => {
   };
 
   beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
+    module = await Test.createTestingModule({
       providers: [
         UsersResolver,
         { provide: UsersService, useValue: mockedUsersService },
@@ -20,6 +21,11 @@ describe('UsersResolver', () => {
     }).compile();
 
     resolver = module.get<UsersResolver>(UsersResolver);
+  });
+
+  afterEach(() => {
+    module.close();
+    jest.clearAllMocks();
   });
 
   it('Should be defined', () => {

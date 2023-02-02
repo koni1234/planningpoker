@@ -5,6 +5,7 @@ import { SetIssueStoryPointsDto } from '../../../src/modules/jira/dto/SetIssueSt
 
 describe('JiraResolver', () => {
   let resolver: JiraResolver;
+  let module: TestingModule;
 
   const mockedJiraService = {
     getIssue: jest.fn(),
@@ -12,7 +13,7 @@ describe('JiraResolver', () => {
   };
 
   beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
+    module = await Test.createTestingModule({
       providers: [
         JiraResolver,
         { provide: JiraService, useValue: mockedJiraService },
@@ -20,6 +21,11 @@ describe('JiraResolver', () => {
     }).compile();
 
     resolver = module.get<JiraResolver>(JiraResolver);
+  });
+
+  afterEach(() => {
+    module.close();
+    jest.clearAllMocks();
   });
 
   it('Should be defined', () => {

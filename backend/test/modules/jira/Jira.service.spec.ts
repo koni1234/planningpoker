@@ -1,10 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { JiraService } from '../../../src/modules/jira/Jira.service';
-import { JiraResolver } from '../../../src/modules/jira/Jira.resolver';
 import { SetIssueStoryPointsDto } from '../../../src/modules/jira/dto/SetIssueStoryPoints.dto';
 
 describe('JiraService', () => {
   let service: JiraService;
+  let module: TestingModule;
 
   const mockedJiraApi = {
     findIssue: jest.fn(),
@@ -12,10 +12,9 @@ describe('JiraService', () => {
   };
 
   beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
+    module = await Test.createTestingModule({
       providers: [
         JiraService,
-        JiraResolver,
         {
           provide: 'JIRA_API',
           useValue: mockedJiraApi,
@@ -24,6 +23,11 @@ describe('JiraService', () => {
     }).compile();
 
     service = module.get<JiraService>(JiraService);
+  });
+
+  afterEach(() => {
+    module.close();
+    jest.clearAllMocks();
   });
 
   it('Should be defined', () => {
@@ -37,7 +41,10 @@ describe('JiraService', () => {
 
     const result = await service.getIssue('issue-id');
 
-    expect(mockedJiraApi.findIssue).toHaveBeenCalledWith('issue-id');
+    expect(mockedJiraApi.findIssue).toHaveBeenCalledWith(
+      'issue-id',
+      'renderedFields',
+    );
     expect(result).toStrictEqual(jiraIssueEntity);
   });
 

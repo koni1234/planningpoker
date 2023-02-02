@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ALL_COLORS, FONT_WEIGHTS } from '../ui.enums';
+import { ALL_COLORS, FONT_WEIGHTS, GRID_BEHAVIORS } from '../ui.enums';
 import { GameInterface, GameIssue, GetGameIssueResponseInterface, UserInterface } from '../types';
 import { computed, ref, watch } from 'vue';
 import { useLazyQuery, useMutation } from '@vue/apollo-composable';
@@ -96,21 +96,25 @@ onGameIssueLoaded((data: FetchResult<GetGameIssueResponseInterface>) => {
 onGameIssueError(() => {
     gameIssue.value = null;
 });
-
 onSetIssueStoryPoints(() => {
     showStoryPointsUpdateMessange.value = true;
+});
+
+defineExpose({
+    gameIssue,
 });
 </script>
 
 <template>
-    <pp-grid class="padding-r--12">
+    <pp-grid class="game-issue">
         <template v-if="canSetGameIssue">
-            <pp-grid-item class="padding-r--8" :cols="6">
+            <pp-grid-item class="padding-r--8" :behavior="GRID_BEHAVIORS.FIXED">
                 <pp-input v-model.trim="text" placeholder="Enter jira issue id" />
             </pp-grid-item>
-            <pp-grid-item class="tp-align--left margin-b--16" :cols="6">
+            <pp-grid-item class="tp-align--left margin-b--16">
                 <pp-button variant="primary" inline value="Set Jira issue" @click="setGameIssue" />
             </pp-grid-item>
+            <pp-grid-item :cols="4" />
         </template>
         <pp-grid-item
             v-if="showStoryPointsUpdateMessange"
@@ -153,29 +157,42 @@ onSetIssueStoryPoints(() => {
             </template>
             <div
                 v-else-if="gameIssue"
-                class="border--1 radius--rounded padding--16 color-bg--white"
+                class="border--1 radius--rounded padding-h--16 padding-b--16 color-bg--white is-relative"
             >
-                <pp-text variant="header-6" class="tp--uppercase" tag="h6">{{
-                    gameIssue.key
-                }}</pp-text>
+                <div class="is-sticky color-bg--white padding-v--16">
+                    <pp-text variant="header-6" class="tp--uppercase" tag="h6">{{
+                        gameIssue.key
+                    }}</pp-text>
+                    <pp-text
+                        variant="header-3"
+                        class="margin-t--4"
+                        :weight="FONT_WEIGHTS.BOLD"
+                        tag="h3"
+                        >{{ gameIssue.fields.summary }}</pp-text
+                    >
+                </div>
                 <pp-text
-                    variant="header-3"
-                    class="margin-b--16 margin-t--4"
-                    :weight="FONT_WEIGHTS.BOLD"
-                    tag="h3"
-                    >{{ gameIssue.fields.summary }}</pp-text
-                >
-                <pp-text variant="text" tag="p">{{
-                    gameIssue.fields.description || 'no description'
-                }}</pp-text>
+                    variant="text"
+                    tag="div"
+                    class="description"
+                    v-html="gameIssue.renderedFields.description || 'no description'"
+                />
             </div>
         </pp-grid-item>
     </pp-grid>
 </template>
 <style lang="scss">
-.game-issue-recap {
-    white-space: pre-line;
-    overflow-y: auto;
-    max-height: 66vh;
+.game-issue {
+    padding-right: $spacing--12;
+
+    &-recap {
+        white-space: pre-line;
+        overflow-y: auto;
+        max-height: 66vh;
+
+        .description pre {
+            white-space: pre-wrap;
+        }
+    }
 }
 </style>
