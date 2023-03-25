@@ -74,6 +74,11 @@
       "json",
       "ts"
     ],
+    "moduleNameMapper": {
+      "^Modules/(.*)": "<rootDir>/modules/$1",
+      "^Pipes/(.*)": "<rootDir>/pipes/$1",
+      "^Graphql": "<rootDir>/graphql.ts"
+    },
     "rootDir": "src",
     "testRegex": ".*\\.spec\\.ts$",
     "transform": {
