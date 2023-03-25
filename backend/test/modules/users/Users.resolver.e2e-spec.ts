@@ -1,12 +1,14 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import * as request from 'supertest';
-import { AppModule } from '../../../src/modules/app.module';
+import { AppModule } from 'Modules/app.module';
 import { INestApplication } from '@nestjs/common';
 
-const gql = '/graphql';
-
 describe('GraphQL UsersResolver (e2e)', () => {
+  const gql = '/graphql';
+
   let app: INestApplication;
+
+  let userId: string;
 
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -22,8 +24,6 @@ describe('GraphQL UsersResolver (e2e)', () => {
   });
 
   it('should create and get a new user', () => {
-    let userId;
-
     return request(app.getHttpServer())
       .post(gql)
       .send({

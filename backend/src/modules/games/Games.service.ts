@@ -1,7 +1,7 @@
 import { CACHE_MANAGER, Inject, Injectable } from '@nestjs/common';
 import { Cache } from 'cache-manager';
 import { CreateGameDto } from './dto/input/CreateGame.dto';
-import { Game, User } from '../../graphql';
+import { Game, User } from 'Graphql';
 import { EnterGameDto } from './dto/input/EnterGame.dto';
 import { LeaveGameDto } from './dto/input/LeaveGame.dto';
 import { VoteDto } from './dto/input/Vote.dto';

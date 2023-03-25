@@ -1,6 +1,6 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { JiraService } from './Jira.service';
-import { JiraIssue } from '../../graphql';
+import { JiraIssue } from 'Graphql';
 import { SetIssueStoryPointsDto } from './dto/SetIssueStoryPoints.dto';
 
 @Resolver('Jira')

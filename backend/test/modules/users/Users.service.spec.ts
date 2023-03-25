@@ -1,7 +1,7 @@
-import { UsersService } from '../../../src/modules/users/Users.service';
 import { Test, TestingModule } from '@nestjs/testing';
 import { CACHE_MANAGER } from '@nestjs/common';
-import { CreateUserDto } from '../../../src/modules/users/dto/input/CreateUser.dto';
+import { CreateUserDto } from 'Modules/users/dto/input/CreateUser.dto';
+import { UsersService } from 'Modules/users/Users.service';
 
 jest.mock('uuid', () => ({
   v4: () => 'uuid',

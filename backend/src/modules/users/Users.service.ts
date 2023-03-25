@@ -1,7 +1,7 @@
 import { CACHE_MANAGER, Inject, Injectable } from '@nestjs/common';
 import { Cache } from 'cache-manager';
 import { CreateUserDto } from './dto/input/CreateUser.dto';
-import { User } from '../../graphql';
+import { User } from 'Graphql';
 import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()

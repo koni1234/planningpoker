@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { JiraResolver } from '../../../src/modules/jira/Jira.resolver';
-import { JiraService } from '../../../src/modules/jira/Jira.service';
-import { SetIssueStoryPointsDto } from '../../../src/modules/jira/dto/SetIssueStoryPoints.dto';
+import { JiraResolver } from 'Modules/jira/Jira.resolver';
+import { JiraService } from 'Modules/jira/Jira.service';
+import { SetIssueStoryPointsDto } from 'Modules/jira/dto/SetIssueStoryPoints.dto';
 
 describe('JiraResolver', () => {
   let resolver: JiraResolver;

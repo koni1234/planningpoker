@@ -1,5 +1,5 @@
 import { IsString } from 'class-validator';
-import { CreateGameInput, VotingScaleType } from '../../../../graphql';
+import { CreateGameInput, VotingScaleType } from 'Graphql';
 
 export class CreateGameDto implements CreateGameInput {
   @IsString()

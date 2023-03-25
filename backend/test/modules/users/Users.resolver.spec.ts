@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { UsersResolver } from '../../../src/modules/users/Users.resolver';
-import { CreateUserDto } from '../../../src/modules/users/dto/input/CreateUser.dto';
-import { UsersService } from '../../../src/modules/users/Users.service';
+import { CreateUserDto } from 'Modules/users/dto/input/CreateUser.dto';
+import { UsersResolver } from 'Modules/users/Users.resolver';
+import { UsersService } from 'Modules/users/Users.service';
 
 describe('UsersResolver', () => {
   let resolver: UsersResolver;

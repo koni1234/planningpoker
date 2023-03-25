@@ -1,14 +1,14 @@
-import { GamesService } from '../../../src/modules/games/Games.service';
+import { Game, VotingScaleType } from 'Graphql';
 import { Test, TestingModule } from '@nestjs/testing';
 import { CACHE_MANAGER } from '@nestjs/common';
-import { CreateGameDto } from '../../../src/modules/games/dto/input/CreateGame.dto';
-import { Game, VotingScaleType } from '../../../src/graphql';
-import { EnterGameDto } from '../../../src/modules/games/dto/input/EnterGame.dto';
-import { LeaveGameDto } from '../../../src/modules/games/dto/input/LeaveGame.dto';
-import { VoteDto } from '../../../src/modules/games/dto/input/Vote.dto';
-import { CloseGameDto } from '../../../src/modules/games/dto/input/CloseGame.dto';
-import { SetGameIssueDto } from '../../../src/modules/games/dto/input/SetGameIssue.dto';
-import { ResetGameDto } from '../../../src/modules/games/dto/input/ResetGame.dto';
+import { CloseGameDto } from 'Modules/games/dto/input/CloseGame.dto';
+import { CreateGameDto } from 'Modules/games/dto/input/CreateGame.dto';
+import { EnterGameDto } from 'Modules/games/dto/input/EnterGame.dto';
+import { GamesService } from 'Modules/games/Games.service';
+import { LeaveGameDto } from 'Modules/games/dto/input/LeaveGame.dto';
+import { ResetGameDto } from 'Modules/games/dto/input/ResetGame.dto';
+import { SetGameIssueDto } from 'Modules/games/dto/input/SetGameIssue.dto';
+import { VoteDto } from 'Modules/games/dto/input/Vote.dto';
 
 describe('GamesService', () => {
   let service: GamesService;

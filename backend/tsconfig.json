@@ -10,6 +10,11 @@
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./",
+    "paths": {
+      "Modules/*": ["src/modules/*"],
+      "Pipes/*": ["src/pipes/*"],
+      "Graphql": ["src/graphql.ts"]
+    },
     "incremental": true,
     "skipLibCheck": true
   }

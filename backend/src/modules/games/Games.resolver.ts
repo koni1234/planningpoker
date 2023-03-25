@@ -10,11 +10,12 @@ import { VoteDto } from './dto/input/Vote.dto';
 import { CloseGameDto } from './dto/input/CloseGame.dto';
 import { ResetGameDto } from './dto/input/ResetGame.dto';
 import { SetGameIssueDto } from './dto/input/SetGameIssue.dto';
+import { PUB_SUB } from '../pubSub/PubSub.module';
 
 @Resolver('Game')
 export class GamesResolver {
   constructor(
-    @Inject('PUB_SUB') private pubSub: PubSubEngine,
+    @Inject(PUB_SUB) private pubSub: PubSubEngine,
     private readonly gamesService: GamesService,
   ) {}
 

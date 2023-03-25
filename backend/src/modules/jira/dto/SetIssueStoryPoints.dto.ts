@@ -1,5 +1,5 @@
 import { IsInt, IsString } from 'class-validator';
-import { SetJiraIssueStoryPointsInput } from '../../../graphql';
+import { SetJiraIssueStoryPointsInput } from 'Graphql';
 
 export class SetIssueStoryPointsDto implements SetJiraIssueStoryPointsInput {
   @IsString()

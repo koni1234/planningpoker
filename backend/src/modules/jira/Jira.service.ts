@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import JiraApi from 'jira-client';
-import { JiraIssue } from '../../graphql';
+import { JiraIssue } from 'Graphql';
 import { SetIssueStoryPointsDto } from './dto/SetIssueStoryPoints.dto';
 
 @Injectable()

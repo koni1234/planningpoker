@@ -1,5 +1,5 @@
 import { IsString } from 'class-validator';
-import { LeaveGameInput } from '../../../../graphql';
+import { LeaveGameInput } from 'Graphql';
 
 export class LeaveGameDto implements LeaveGameInput {
   @IsString()

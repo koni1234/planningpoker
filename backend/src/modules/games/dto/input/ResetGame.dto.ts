@@ -1,5 +1,5 @@
 import { IsString } from 'class-validator';
-import { ResetGameInput } from '../../../../graphql';
+import { ResetGameInput } from 'Graphql';
 
 export class ResetGameDto implements ResetGameInput {
   @IsString()

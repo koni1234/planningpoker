@@ -1,5 +1,5 @@
 import { IsString } from 'class-validator';
-import { VoteInput } from '../../../../graphql';
+import { VoteInput } from 'Graphql';
 
 export class VoteDto implements VoteInput {
   @IsString()
