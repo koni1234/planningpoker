@@ -1,5 +1,4 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { JIRA_API } from 'Modules/jira/Jira.module';
 import { JiraService } from 'Modules/jira/Jira.service';
 import { SetIssueStoryPointsDto } from 'Modules/jira/dto/SetIssueStoryPoints.dto';
 
@@ -17,7 +16,7 @@ describe('JiraService', () => {
       providers: [
         JiraService,
         {
-          provide: JIRA_API,
+          provide: 'JIRA_API',
           useValue: mockedJiraApi,
         },
       ],
