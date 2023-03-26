@@ -21,6 +21,7 @@ module.exports = {
     rules: {
         'no-undef': 'off',
         'prefer-template': 'error',
+        'vue/multi-word-component-names': 'off',
         'vue/no-v-for-template-key': 'off',
         'vue/no-v-model-argument': 'off',
         'vue/prefer-template': 'error',

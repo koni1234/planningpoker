@@ -1,11 +1,5 @@
 <template>
-    <input
-        :id="id"
-        :type="type"
-        :class="classes"
-        :value="modelValue"
-        @input="$emit('update:modelValue', $event.target.value)"
-    />
+    <input :id="id" :type="type" :class="classes" :value="modelValue" @input="updateModelValue" />
 </template>
 
 <script lang="ts">
@@ -52,7 +46,11 @@ export default defineComponent({
         },
     },
     emits: ['update:modelValue'],
-    setup(props) {
+    setup(props, { emit }) {
+        const updateModelValue = (event: Event) => {
+            emit('update:modelValue', (event.target as HTMLInputElement).value);
+        };
+
         const classes = computed(() => {
             return [
                 'pp-input',
@@ -63,6 +61,7 @@ export default defineComponent({
 
         return {
             classes,
+            updateModelValue,
         };
     },
 });

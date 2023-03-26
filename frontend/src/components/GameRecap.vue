@@ -6,6 +6,7 @@ import {
     FLEX_WRAP,
     GRID_GUTTERS,
     TEXT_SIZES,
+    TEXT_VARIANTS,
 } from '../ui.enums';
 import { GameInterface, UserInterface } from '../types';
 import PpGrid from './common/PpGrid.vue';
@@ -64,7 +65,9 @@ const average = computed<number | string>(() => {
         class="color-bg--white radius--rounded padding--24"
     >
         <pp-grid-item :cols="12">
-            <pp-text variant="header-1" class="margin-b--24" tag="h1"> Result </pp-text>
+            <pp-text :variant="TEXT_VARIANTS.HEADER_1" class="margin-b--24" tag="h1">
+                Result
+            </pp-text>
         </pp-grid-item>
         <pp-grid-item
             v-for="(vote, index) in votes"
@@ -79,7 +82,7 @@ const average = computed<number | string>(() => {
             <pp-text class="margin-v--12">{{ vote.totUsers }} votes</pp-text>
         </pp-grid-item>
         <pp-grid-item :cols="12">
-            <pp-text variant="header-3" class="margin-v--12" tag="h3">
+            <pp-text :variant="TEXT_VARIANTS.HEADER_3" class="margin-v--12" tag="h3">
                 Average: {{ average }}
             </pp-text>
         </pp-grid-item>

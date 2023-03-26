@@ -2,7 +2,7 @@ import { Args, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql';
 import { PubSubEngine } from 'graphql-subscriptions';
 import { GamesService } from './Games.service';
 import { CreateGameDto } from './dto/input/CreateGame.dto';
-import { Game } from '../../graphql';
+import { Game } from 'Graphql';
 import { Inject } from '@nestjs/common';
 import { EnterGameDto } from './dto/input/EnterGame.dto';
 import { LeaveGameDto } from './dto/input/LeaveGame.dto';

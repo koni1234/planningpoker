@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { FLEX_ALIGN, FLEX_JUSTIFY, FLEX_WRAP, GRID_GUTTERS } from '../ui.enums';
+import { FLEX_ALIGN, FLEX_JUSTIFY, FLEX_WRAP, GRID_GUTTERS, TEXT_VARIANTS } from '../ui.enums';
 import { computed, ref } from 'vue';
 import PpGrid from './common/PpGrid.vue';
 import PpGridItem from './common/PpGridItem.vue';
@@ -42,7 +42,9 @@ const onVote = (card: string) => {
         class="animate__animated animate__slideInLeft"
     >
         <pp-grid-item :cols="12">
-            <pp-text variant="header-1" class="margin-b--24" tag="h1"> Choose your card </pp-text>
+            <pp-text :variant="TEXT_VARIANTS.HEADER_1" class="margin-b--24" tag="h1">
+                Choose your card
+            </pp-text>
         </pp-grid-item>
         <pp-grid-item
             v-for="(card, index) in cards"

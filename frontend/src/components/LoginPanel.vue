@@ -1,6 +1,6 @@
 <script setup lang="ts">
+import { ALL_COLORS, BUTTON_VARIANTS, TEXT_VARIANTS } from '../ui.enums';
 import { CreateUserResponseInterface, UserInterface } from '../types';
-import { ALL_COLORS } from '../ui.enums';
 import { ApolloError } from '@apollo/client/core';
 import { BadUserInputExceptionInterface } from '../exceptions/BadUserInputExceptionInterface';
 import { CREATE_USER } from '../graphql/mutations/CreateUser';
@@ -55,7 +55,9 @@ onError((error: ApolloError) => {
     <pp-content-bar />
     <pp-grid class="margin-v--64">
         <pp-grid-item :cols="12">
-            <pp-text variant="header-1" class="margin-b--24" tag="h1"> Login </pp-text>
+            <pp-text :variant="TEXT_VARIANTS.HEADER_1" class="margin-b--24" tag="h1">
+                Login
+            </pp-text>
         </pp-grid-item>
         <pp-grid-item v-if="errors.length" :cols="12" class="margin-b--24">
             <pp-text tag="span" :color="ALL_COLORS.DANGER">{{ errors.join('\n') }}</pp-text>
@@ -67,7 +69,12 @@ onError((error: ApolloError) => {
                 placeholder="Enter your name"
                 class="margin-r--12"
             />
-            <pp-button variant="primary" inline value="Enter" @click="createUser" />
+            <pp-button
+                :variant="BUTTON_VARIANTS.PRIMARY"
+                inline
+                value="Enter"
+                @click="createUser"
+            />
         </pp-grid-item>
     </pp-grid>
 </template>

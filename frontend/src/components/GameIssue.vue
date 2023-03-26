@@ -1,5 +1,11 @@
 <script setup lang="ts">
-import { ALL_COLORS, FONT_WEIGHTS, GRID_BEHAVIORS } from '../ui.enums';
+import {
+    ALL_COLORS,
+    BUTTON_VARIANTS,
+    FONT_WEIGHTS,
+    GRID_BEHAVIORS,
+    TEXT_VARIANTS,
+} from '../ui.enums';
 import { GameInterface, GameIssue, GetGameIssueResponseInterface, UserInterface } from '../types';
 import { computed, ref, watch } from 'vue';
 import { useLazyQuery, useMutation } from '@vue/apollo-composable';
@@ -112,7 +118,12 @@ defineExpose({
                 <pp-input v-model.trim="text" placeholder="Enter jira issue id" />
             </pp-grid-item>
             <pp-grid-item class="tp-align--left margin-b--16">
-                <pp-button variant="primary" inline value="Set Jira issue" @click="setGameIssue" />
+                <pp-button
+                    :variant="BUTTON_VARIANTS.PRIMARY"
+                    inline
+                    value="Set Jira issue"
+                    @click="setGameIssue"
+                />
             </pp-grid-item>
             <pp-grid-item :cols="4" />
         </template>
@@ -138,7 +149,7 @@ defineExpose({
                 :cols="6"
             >
                 <pp-button
-                    variant="secondary"
+                    :variant="BUTTON_VARIANTS.SECONDARY"
                     inline
                     value="Set story points"
                     :disabled="loadingStoryPoints"
@@ -153,30 +164,34 @@ defineExpose({
         </template>
         <pp-grid-item class="game-issue-recap tp-align--left tp--break-word" :cols="12">
             <template v-if="loading">
-                <pp-text variant="header-1" class="game-issue-loader">loading</pp-text>
+                <pp-text :variant="TEXT_VARIANTS.HEADER_1" class="game-issue-loader"
+                    >loading</pp-text
+                >
             </template>
             <div
                 v-else-if="gameIssue"
                 class="border--1 radius--rounded padding-h--16 padding-b--16 color-bg--white is-relative"
             >
                 <div class="is-sticky color-bg--white padding-v--16">
-                    <pp-text variant="header-6" class="tp--uppercase" tag="h6">{{
+                    <pp-text :variant="TEXT_VARIANTS.HEADER_6" class="tp--uppercase" tag="h6">{{
                         gameIssue.key
                     }}</pp-text>
                     <pp-text
-                        variant="header-3"
+                        :variant="TEXT_VARIANTS.HEADER_3"
                         class="margin-t--4"
                         :weight="FONT_WEIGHTS.BOLD"
                         tag="h3"
                         >{{ gameIssue.fields.summary }}</pp-text
                     >
                 </div>
+                <!-- eslint-disable vue/no-v-text-v-html-on-component vue/no-v-html -->
                 <pp-text
-                    variant="text"
+                    :variant="TEXT_VARIANTS.TEXT"
                     tag="div"
                     class="description"
                     v-html="gameIssue.renderedFields.description || 'no description'"
                 />
+                <!-- eslint-enable vue/no-v-text-v-html-on-component vue/no-v-html -->
             </div>
         </pp-grid-item>
     </pp-grid>

@@ -8,15 +8,19 @@ import { DefaultApolloClient } from '@vue/apollo-composable';
 import { WebSocketLink } from '@apollo/client/link/ws';
 import { getMainDefinition } from '@apollo/client/utilities';
 
+const graphUrl = `${import.meta.env.VITE_GRAPHQL_HOST}:${
+    import.meta.env.VITE_GRAPHQL_PORT
+}/graphql`;
+
 const wsLink = new WebSocketLink({
-    uri: `ws://localhost:3000/graphql`,
+    uri: `ws://${graphUrl}`,
     options: {
         reconnect: true,
     },
 });
 
 const httpLink = new HttpLink({
-    uri: 'http://localhost:3000/graphql',
+    uri: `http://${graphUrl}`,
 });
 
 const link = split(

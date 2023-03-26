@@ -6,14 +6,23 @@
         :gutters="GRID_GUTTERS.SIZE_8"
     >
         <pp-content-bar-item :behavior="GRID_BEHAVIORS.FIXED" :push="SIDES.LEFT">
-            <pp-text variant="header-2" :color="ALL_COLORS.SECONDARY">Planning Poker</pp-text>
+            <pp-text :variant="TEXT_VARIANTS.HEADER_2" :color="ALL_COLORS.SECONDARY"
+                >Planning Poker</pp-text
+            >
         </pp-content-bar-item>
         <slot />
     </pp-grid>
 </template>
 
 <script lang="ts">
-import { ALL_COLORS, FLEX_JUSTIFY, GRID_BEHAVIORS, GRID_GUTTERS, SIDES } from '../../ui.enums';
+import {
+    ALL_COLORS,
+    FLEX_JUSTIFY,
+    GRID_BEHAVIORS,
+    GRID_GUTTERS,
+    SIDES,
+    TEXT_VARIANTS,
+} from '../../ui.enums';
 import { computed, defineComponent } from 'vue';
 import PpContentBarItem from './PpContentBarItem.vue';
 import PpGrid from './PpGrid.vue';
@@ -57,6 +66,7 @@ export default defineComponent({
             FLEX_JUSTIFY,
             GRID_BEHAVIORS,
             GRID_GUTTERS,
+            TEXT_VARIANTS,
             SIDES,
             classes,
         };

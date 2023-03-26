@@ -1,11 +1,11 @@
 <script setup lang="ts">
+import { BUTTON_VARIANTS, FLEX_ALIGN, FLEX_DIRECTION, TEXT_VARIANTS } from '../ui.enums';
 import {
     CreateGameResponseInterface,
     GameInterface,
     UserInterface,
     VotingScaleEnum,
 } from '../types';
-import { FLEX_ALIGN, FLEX_DIRECTION } from '../ui.enums';
 import { computed, ref } from 'vue';
 import { CLOSE_GAME } from '../graphql/mutations/CloseGame';
 import { CREATE_GAME } from '../graphql/mutations/CreateGame';
@@ -28,7 +28,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 interface Props {
     user: UserInterface;
-    game?: GameInterface;
+    game: GameInterface | null;
 }
 
 const props = defineProps<Props>();
@@ -45,6 +45,10 @@ const canShowGameIssueColumn = computed<boolean>(() => {
 });
 
 const newGameId = uuidv4();
+
+const gameId = computed<string>(() => {
+    return props.game?.id || newGameId;
+});
 
 const canCloseGame = computed<boolean>(() => {
     return props.game?.ownerId === props.user.id && !props.game.closed;
@@ -127,13 +131,17 @@ window.addEventListener('beforeunload', (e) => {
             <pp-button> Invite players </pp-button>
         </pp-content-bar-item>
         <pp-content-bar-item v-if="props.game">
-            <pp-button variant="danger-outline" @click="leaveGame"> Leave the game </pp-button>
+            <pp-button :variant="BUTTON_VARIANTS.DANGER_OUTLINE" @click="leaveGame">
+                Leave the game
+            </pp-button>
         </pp-content-bar-item>
         <pp-content-bar-item v-if="canCloseGame">
-            <pp-button variant="primary-outline" @click="revealCards"> Reveal cards </pp-button>
+            <pp-button :variant="BUTTON_VARIANTS.PRIMARY_OUTLINE" @click="revealCards">
+                Reveal cards
+            </pp-button>
         </pp-content-bar-item>
         <pp-content-bar-item v-if="canStartNewGame">
-            <pp-button variant="primary" @click="resetGame"> New game </pp-button>
+            <pp-button :variant="BUTTON_VARIANTS.PRIMARY" @click="resetGame"> New game </pp-button>
         </pp-content-bar-item>
     </pp-content-bar>
     <pp-grid full-width :direction="FLEX_DIRECTION.COLUMN" :align="FLEX_ALIGN.CENTER">
@@ -167,12 +175,12 @@ window.addEventListener('beforeunload', (e) => {
             </pp-grid>
         </pp-grid-item>
         <pp-grid-item v-else class="margin-v--64">
-            <pp-text variant="header-3" class="margin-b--24" tag="h3">
+            <pp-text :variant="TEXT_VARIANTS.HEADER_3" class="margin-b--24" tag="h3">
                 Hello {{ props.user.name }}
             </pp-text>
 
             <pp-button class="is-inline--f" @click="createGame">
-                Start new game {{ props.game?.id || newGameId }}
+                Start new game {{ gameId }}
             </pp-button>
         </pp-grid-item>
     </pp-grid>

@@ -10,7 +10,7 @@ import { computed } from 'vue';
 
 interface Props {
     value?: string | number;
-    variant?: TEXT_VARIANTS;
+    variant?: TEXT_VARIANTS | undefined;
     tag?: string;
     color?: string;
     align?: TEXT_ALIGNMENTS;

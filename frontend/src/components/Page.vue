@@ -17,6 +17,7 @@ import GamePanel from './GamePanel.vue';
 import LoginPanel from './LoginPanel.vue';
 import PpText from './common/PpText.vue';
 import { StorageProvider } from '../services/storage/StorageProvider';
+import { TEXT_VARIANTS } from '../ui.enums';
 
 const urlPath = window.location.pathname.substring(1);
 const localStorage = StorageProvider.localStorage();
@@ -121,7 +122,7 @@ if (userdata.value.id) {
 <template>
     <div class="tp-align--center">
         <template v-if="loading">
-            <pp-text variant="header-1" class="loader">loading</pp-text>
+            <pp-text :variant="TEXT_VARIANTS.HEADER_1" class="loader">loading</pp-text>
         </template>
         <template v-else-if="userdata.id">
             <game-panel

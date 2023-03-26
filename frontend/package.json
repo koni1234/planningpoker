@@ -1,7 +1,8 @@
 {
-  "name": "frontend",
+  "name": "planningpoker-frontend",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "Planning poker - frontend",
   "scripts": {
     "dev": "vite",
     "tsc:validation": "vue-tsc --project tsconfig.json --noEmit",
