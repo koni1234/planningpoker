@@ -132,6 +132,7 @@ onCreateGame((data: FetchResult<CreateGameResponseInterface>) => {
 });
 
 onLeaveGame(() => {
+    urlCopiedMessageIsVisible.value = false;
     emit('leaveGame');
 });
 
