@@ -11,8 +11,15 @@
     "isolatedModules": true,
     "esModuleInterop": true,
     "lib": ["ESNext", "DOM"],
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "paths": {
+      "Components/*": ["./src/components/*"],
+      "Exceptions/*": ["./src/exceptions/*"],
+      "Graphql/*": ["./src/graphql/*"],
+      "Mocks/*": ["./tests/unit/mocks/*"],
+      "Types": ["./src/types"]
+    }
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "tests/**/*"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
