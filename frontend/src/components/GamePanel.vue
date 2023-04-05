@@ -1,5 +1,12 @@
 <script setup lang="ts">
-import { BUTTON_VARIANTS, FLEX_ALIGN, FLEX_DIRECTION, TEXT_VARIANTS } from '../ui.enums';
+import {
+    ALL_COLORS,
+    BUTTON_VARIANTS,
+    FLEX_ALIGN,
+    FLEX_DIRECTION,
+    FONT_WEIGHTS,
+    TEXT_VARIANTS,
+} from '../ui.enums';
 import {
     CreateGameResponseInterface,
     GameInterface,
@@ -109,6 +116,15 @@ const onVote = async (vote: string) => {
     });
 };
 
+const urlCopiedMessageIsVisible = ref<boolean>(false);
+const copyUrlToClipboad = async () => {
+    urlCopiedMessageIsVisible.value = false;
+
+    await navigator.clipboard.writeText(`${window.location.origin}/${gameId.value}`);
+
+    urlCopiedMessageIsVisible.value = true;
+};
+
 onCreateGame((data: FetchResult<CreateGameResponseInterface>) => {
     if (data.data?.createGame) {
         emit('newGame', data.data.createGame);
@@ -116,6 +132,7 @@ onCreateGame((data: FetchResult<CreateGameResponseInterface>) => {
 });
 
 onLeaveGame(() => {
+    urlCopiedMessageIsVisible.value = false;
     emit('leaveGame');
 });
 
@@ -128,7 +145,14 @@ window.addEventListener('beforeunload', (e) => {
 <template>
     <pp-content-bar>
         <pp-content-bar-item v-if="props.game">
-            <pp-button> Invite players </pp-button>
+            <pp-text
+                v-if="urlCopiedMessageIsVisible"
+                :weight="FONT_WEIGHTS.BOLD"
+                :color="ALL_COLORS.SUCCESS"
+                class="animate__animated animate__fadeOut animate__delay-3s is-inline--f margin-r--12"
+                value="Url copied to clipboard!"
+            />
+            <pp-button class="is-inline--f" @click="copyUrlToClipboad"> Invite players </pp-button>
         </pp-content-bar-item>
         <pp-content-bar-item v-if="props.game">
             <pp-button :variant="BUTTON_VARIANTS.DANGER_OUTLINE" @click="leaveGame">
