@@ -71,6 +71,7 @@ onError((error: ApolloError) => {
             />
             <pp-button
                 :variant="BUTTON_VARIANTS.PRIMARY"
+                :disabled="!text || text.length < 1"
                 inline
                 value="Enter"
                 @click="createUser"
