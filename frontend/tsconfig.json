@@ -16,6 +16,7 @@
       "Components/*": ["./src/components/*"],
       "Exceptions/*": ["./src/exceptions/*"],
       "Graphql/*": ["./src/graphql/*"],
+      "Services/*": ["./src/services/*"],
       "Mocks/*": ["./tests/unit/mocks/*"],
       "Types": ["./src/types"]
     }

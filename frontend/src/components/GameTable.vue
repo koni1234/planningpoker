@@ -25,7 +25,7 @@ const props = defineProps<Props>();
         :gutters="GRID_GUTTERS.SIZE_16"
         :align="FLEX_ALIGN.CENTER"
         :justify="FLEX_JUSTIFY.CENTER"
-        class="color-bg--primary-light radius--rounded padding--24"
+        class="game-table color-bg--primary-light radius--rounded padding--24"
     >
         <template v-for="(user, index) in props.game.users" :key="index">
             <pp-grid-item class="vote-wrapper animate__animated animate__fadeIn">

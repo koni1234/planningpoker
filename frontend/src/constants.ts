@@ -5,3 +5,7 @@ export const VOTING_SCALES_VALUES = {
     fibonacci: VOTING_SCALE_FIBONACCI,
     tshirt: VOTING_SCALE_TSHIRT,
 };
+
+export const GRAPH_URL = `${import.meta.env.VITE_GRAPHQL_HOST}:${
+    import.meta.env.VITE_GRAPHQL_PORT
+}/graphql`;

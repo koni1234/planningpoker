@@ -62,7 +62,7 @@ const average = computed<number | string>(() => {
         :gutters="GRID_GUTTERS.SIZE_16"
         :align="FLEX_ALIGN.CENTER"
         :justify="FLEX_JUSTIFY.CENTER"
-        class="color-bg--white radius--rounded padding--24"
+        class="game-recap color-bg--white radius--rounded padding--24"
     >
         <pp-grid-item :cols="12">
             <pp-text :variant="TEXT_VARIANTS.HEADER_1" class="margin-b--24" tag="h1">
