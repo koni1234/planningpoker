@@ -5,22 +5,19 @@ import { ApolloClient, HttpLink, InMemoryCache, split } from '@apollo/client/cor
 import { createApp, h, provide } from 'vue';
 import App from './App.vue';
 import { DefaultApolloClient } from '@vue/apollo-composable';
+import { GRAPH_URL } from './constants';
 import { WebSocketLink } from '@apollo/client/link/ws';
 import { getMainDefinition } from '@apollo/client/utilities';
 
-const graphUrl = `${import.meta.env.VITE_GRAPHQL_HOST}:${
-    import.meta.env.VITE_GRAPHQL_PORT
-}/graphql`;
-
 const wsLink = new WebSocketLink({
-    uri: `ws://${graphUrl}`,
+    uri: `ws://${GRAPH_URL}`,
     options: {
         reconnect: true,
     },
 });
 
 const httpLink = new HttpLink({
-    uri: `http://${graphUrl}`,
+    uri: `http://${GRAPH_URL}`,
 });
 
 const link = split(
